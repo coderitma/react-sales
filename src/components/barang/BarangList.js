@@ -3,6 +3,7 @@ import { Button, Card, Table } from "react-bootstrap";
 import config from "../../config";
 import BarangService from "../../services/BarangService";
 import BarangAdd from "./BarangAdd";
+import BarangDelete from "./BarangDelete";
 import BarangEdit from "./BarangEdit";
 
 const BarangList = () => {
@@ -62,9 +63,13 @@ const BarangList = () => {
                       <td>{barang.hargaJual}</td>
                       <td>{barang.jumlahBarang}</td>
                       <td>
-                        <Button variant="outline-secondary" size="sm">
-                          Hapus
-                        </Button>
+                        <BarangDelete
+                          classAttr={"mx-2"}
+                          variant={"outline-secondary"}
+                          size="sm"
+                          handleCallback={handleCallback}
+                          kodeBarang={barang.kodeBarang}
+                        />
                         <BarangEdit
                           classAttr={"mx-2"}
                           variant={"warning"}

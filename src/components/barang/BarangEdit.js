@@ -18,7 +18,6 @@ const BarangEdit = ({
   const handleEditBarang = () => {
     BarangService.edit(barang)
       .then(({ data }) => {
-        alert("data barang berhasil diubah.");
         handleHideModal();
         handleCallback(data);
       })

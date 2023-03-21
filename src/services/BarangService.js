@@ -40,9 +40,17 @@ const edit = (barang) => {
   );
 };
 
+const remove = (kodeBarang) => {
+  return axios.delete(
+    `${config.API_BASE_URL}${config.API_ENDPOINT_BARANG}/${kodeBarang}`,
+    conf
+  );
+};
+
 export default {
   list,
   create,
   get,
   edit,
+  remove,
 };
