@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
 import PemasokForm from "./PemasokForm";
-import { FaSearch, FaPlus } from "react-icons/fa";
+import { FaSearch, FaPlus, FaPlusSquare } from "react-icons/fa";
 
 const PemasokList = () => {
   const [daftarPemasok, setDaftarPemasok] = useState([]);
@@ -36,7 +36,11 @@ const PemasokList = () => {
               variant="dark"
               size={"sm"}
               title="Tambah Pemasok"
-              textButton={<FaPlus />}
+              textButton={
+                <>
+                  <FaPlusSquare /> Tambah
+                </>
+              }
             />
           </Col>
         </Row>
@@ -68,7 +72,11 @@ const PemasokList = () => {
                             kodePemasok={pemasok.kodePemasok}
                             size={"sm"}
                             title="Edit Pemasok"
-                            textButton={<FaSearch />}
+                            textButton={
+                              <>
+                                <FaSearch /> Lihat
+                              </>
+                            }
                           />
                         </td>
                       </tr>

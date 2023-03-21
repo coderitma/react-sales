@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
+import { FaSave, FaTrash } from "react-icons/fa";
 import PemasokService from "../../services/PemasokService";
 
 const ModelPemasok = {
@@ -119,16 +120,20 @@ const PemasokForm = ({
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Batal
-          </Button>
           {kodePemasok ? (
-            <Button variant="dark" onClick={handlePemasokServiceEdit}>
-              Simpan
-            </Button>
+            <>
+              <Button
+                variant="outline-secondary"
+                onClick={handlePemasokServiceCreate}>
+                <FaTrash /> Hapus
+              </Button>
+              <Button variant="dark" onClick={handlePemasokServiceEdit}>
+                <FaSave /> Simpan Perubahan
+              </Button>
+            </>
           ) : (
             <Button variant="dark" onClick={handlePemasokServiceCreate}>
-              Simpan
+              <FaSave /> Simpan
             </Button>
           )}
         </Modal.Footer>
