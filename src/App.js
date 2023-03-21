@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BarangList from "./components/barang/BarangList";
 import Layout from "./components/Layout";
+import PemasokList from "./components/pemasok/PemasokList";
 import Protected from "./components/Protected";
 import LoginPage from "./components/users/LoginPage";
 
@@ -16,6 +17,14 @@ function App() {
             element={
               <Protected title="Modul Barang">
                 <BarangList />
+              </Protected>
+            }
+          />
+          <Route
+            path="/pemasok"
+            element={
+              <Protected title="Modul Pemasok">
+                <PemasokList />
               </Protected>
             }
           />

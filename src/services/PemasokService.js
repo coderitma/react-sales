@@ -31,10 +31,10 @@ const get = (kodePemasok) => {
 };
 
 const edit = (pemasok) => {
-  const { kodePemasok, ...pemasok } = pemasok;
+  const { kodePemasok, ...dataPemasok } = pemasok;
   return axios.put(
     `${config.API_BASE_URL}${config.API_ENDPOINT_PEMASOK}/${kodePemasok}`,
-    { ...pemasok },
+    { ...dataPemasok },
     conf
   );
 };
