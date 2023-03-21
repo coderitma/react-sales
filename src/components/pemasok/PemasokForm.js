@@ -9,7 +9,14 @@ const ModelPemasok = {
   teleponPemasok: "",
 };
 
-const PemasokForm = ({ handleCallback, variant, size, kodePemasok }) => {
+const PemasokForm = ({
+  handleCallback,
+  variant,
+  size,
+  kodePemasok,
+  title,
+  textButton,
+}) => {
   const [pemasok, setPemasok] = useState(ModelPemasok);
   const [show, setShow] = useState(false);
 
@@ -62,11 +69,11 @@ const PemasokForm = ({ handleCallback, variant, size, kodePemasok }) => {
   return (
     <>
       <Button variant={variant} size={size} onClick={handleShow}>
-        {kodePemasok ? "Edit" : "Tambah"}
+        {textButton}
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>{kodePemasok ? "Edit" : "Tambah"}</Modal.Title>
+          <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="my-2">
@@ -116,11 +123,11 @@ const PemasokForm = ({ handleCallback, variant, size, kodePemasok }) => {
             Batal
           </Button>
           {kodePemasok ? (
-            <Button variant="primary" onClick={handlePemasokServiceEdit}>
+            <Button variant="dark" onClick={handlePemasokServiceEdit}>
               Simpan
             </Button>
           ) : (
-            <Button variant="primary" onClick={handlePemasokServiceCreate}>
+            <Button variant="dark" onClick={handlePemasokServiceCreate}>
               Simpan
             </Button>
           )}

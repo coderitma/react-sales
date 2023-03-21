@@ -7,6 +7,7 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { Link, useNavigate } from "react-router-dom";
+import { BiBarChartSquare } from "react-icons/bi";
 
 const RightMenu = ({ title }) => {
   const navigate = useNavigate();
@@ -21,14 +22,8 @@ const RightMenu = ({ title }) => {
       <Navbar bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href="#" onClick={handleShow}>
-            <img
-              alt=""
-              src="https://icons.iconarchive.com/icons/iconka/business-finance/64/cash-register-icon.png"
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-            />
-            &nbsp;&nbsp; Brick Sales <Badge bg="primary">{title}</Badge>
+            <BiBarChartSquare className="text-warning" size={"1.5em"} />
+            &nbsp;&nbsp;Brick Sales
           </Navbar.Brand>
         </Container>
       </Navbar>

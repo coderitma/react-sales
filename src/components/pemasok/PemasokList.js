@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
 import PemasokForm from "./PemasokForm";
+import { FaSearch, FaPlus } from "react-icons/fa";
 
 const PemasokList = () => {
   const [daftarPemasok, setDaftarPemasok] = useState([]);
@@ -32,8 +33,10 @@ const PemasokList = () => {
             <h4>Daftar Pemasok</h4>
             <PemasokForm
               handleCallback={handleCallback}
-              variant="primary"
+              variant="dark"
               size={"sm"}
+              title="Tambah Pemasok"
+              textButton={<FaPlus />}
             />
           </Col>
         </Row>
@@ -61,9 +64,11 @@ const PemasokList = () => {
                         <td>
                           <PemasokForm
                             handleCallback={handleCallback}
-                            variant="warning"
+                            variant="secondary"
                             kodePemasok={pemasok.kodePemasok}
                             size={"sm"}
+                            title="Edit Pemasok"
+                            textButton={<FaSearch />}
                           />
                         </td>
                       </tr>
