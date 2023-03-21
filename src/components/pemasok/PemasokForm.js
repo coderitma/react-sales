@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
 
@@ -9,7 +9,7 @@ const ModelPemasok = {
   teleponPemasok: "",
 };
 
-const PemasokAdd = ({ handleCallback, variant, size }) => {
+const PemasokForm = ({ handleCallback, variant, size, kodePemasok }) => {
   const [pemasok, setPemasok] = useState(ModelPemasok);
   const [show, setShow] = useState(false);
 
@@ -34,20 +34,46 @@ const PemasokAdd = ({ handleCallback, variant, size }) => {
       });
   };
 
+  const handlePemasokServiceGet = () => {
+    if (kodePemasok) {
+      PemasokService.get(kodePemasok)
+        .then((response) => {
+          setPemasok(response.data);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  };
+
+  const handlePemasokServiceEdit = () => {
+    PemasokService.edit(pemasok)
+      .then((response) => {
+        handleCallback(null, pemasok);
+        handleClose();
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  useEffect(handlePemasokServiceGet, [kodePemasok]);
+
   return (
     <>
       <Button variant={variant} size={size} onClick={handleShow}>
-        Tambah Pemasok
+        {kodePemasok ? "Edit" : "Tambah"}
       </Button>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Pemasok</Modal.Title>
+          <Modal.Title>{kodePemasok ? "Edit" : "Tambah"}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form.Group className="my-2">
             <Form.Label>Kode Pemasok</Form.Label>
             <Form.Control
               name="kodePemasok"
+              disabled={kodePemasok ? true : false}
               type="text"
               onChange={handleInput}
               value={pemasok.kodePemasok}
@@ -89,13 +115,19 @@ const PemasokAdd = ({ handleCallback, variant, size }) => {
           <Button variant="secondary" onClick={handleClose}>
             Batal
           </Button>
-          <Button variant="primary" onClick={handlePemasokServiceCreate}>
-            Simpan
-          </Button>
+          {kodePemasok ? (
+            <Button variant="primary" onClick={handlePemasokServiceEdit}>
+              Simpan
+            </Button>
+          ) : (
+            <Button variant="primary" onClick={handlePemasokServiceCreate}>
+              Simpan
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default PemasokAdd;
+export default PemasokForm;

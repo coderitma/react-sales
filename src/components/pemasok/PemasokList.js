@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
-import PemasokAdd from "./PemasokAdd";
+import PemasokForm from "./PemasokForm";
 
 const PemasokList = () => {
   const [daftarPemasok, setDaftarPemasok] = useState([]);
@@ -30,10 +30,10 @@ const PemasokList = () => {
             md={12}
             className="d-flex align-items-center flex-row justify-content-between">
             <h4>Daftar Pemasok</h4>
-            <PemasokAdd
+            <PemasokForm
               handleCallback={handleCallback}
               variant="primary"
-              size="sm"
+              size={"sm"}
             />
           </Col>
         </Row>
@@ -58,7 +58,14 @@ const PemasokList = () => {
                         <td>{pemasok.namaPemasok}</td>
                         <td>{pemasok.alamatPemasok}</td>
                         <td>{pemasok.teleponPemasok}</td>
-                        <td></td>
+                        <td>
+                          <PemasokForm
+                            handleCallback={handleCallback}
+                            variant="warning"
+                            kodePemasok={pemasok.kodePemasok}
+                            size={"sm"}
+                          />
+                        </td>
                       </tr>
                     ))}
                 </tbody>
