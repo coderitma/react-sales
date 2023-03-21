@@ -3,6 +3,7 @@ const config = {
   API_ENDPOINT_LOGIN: "/users/login",
   API_ENDPOINT_CHECK_TOKEN: "/hello/world",
   API_ENDPOINT_BARANG: "/barang",
+  API_ENDPOINT_PEMASOK: "/pemasok",
   TOAST_WARNING: {
     TEXT: "Warning",
     ICON: "https://icons.iconarchive.com/icons/custom-icon-design/flatastic-9/24/Warning-icon.png",
