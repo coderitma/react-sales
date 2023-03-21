@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
+import PemasokAdd from "./PemasokAdd";
 
 const PemasokList = () => {
   const [daftarPemasok, setDaftarPemasok] = useState([]);
 
-  const handleCallback = (activity, data) => {};
+  const handleCallback = (activity, data) => {
+    handlePemasokServiceList();
+  };
 
   const handlePemasokServiceList = () => {
     PemasokService.list()
@@ -27,6 +30,11 @@ const PemasokList = () => {
             md={12}
             className="d-flex align-items-center flex-row justify-content-between">
             <h4>Daftar Pemasok</h4>
+            <PemasokAdd
+              handleCallback={handleCallback}
+              variant="primary"
+              size="sm"
+            />
           </Col>
         </Row>
         <Row className="my-2">
