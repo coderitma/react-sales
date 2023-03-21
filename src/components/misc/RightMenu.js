@@ -6,8 +6,11 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { Link, useNavigate } from "react-router-dom";
 
 const RightMenu = ({ title }) => {
+  const navigate = useNavigate();
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -32,18 +35,16 @@ const RightMenu = ({ title }) => {
 
       <Offcanvas show={show} onHide={handleClose}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          <Offcanvas.Title>Menu</Offcanvas.Title>
         </Offcanvas.Header>
         <ListGroup variant="flush">
-          <ListGroup.Item>Cras justo odio</ListGroup.Item>
-          <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-          <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-          <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
+          <ListGroup.Item action onClick={() => navigate("/barang")}>
+            Barang
+          </ListGroup.Item>
+          <ListGroup.Item action onClick={() => navigate("/pemasok")}>
+            Pemasok
+          </ListGroup.Item>
         </ListGroup>
-        <Offcanvas.Body>
-          Some text as placeholder. In real life you can have the elements you
-          have chosen. Like, text, images, lists, etc.
-        </Offcanvas.Body>
       </Offcanvas>
     </>
   );
