@@ -3,6 +3,11 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { FaArrowAltCircleLeft, FaSave } from "react-icons/fa";
 import PemasokService from "../../services/PemasokService";
 
+const activity = {
+  PEMASOK_FORM_CREATE: "PEMASOK_DELETE_CONFIRM_CANCEL",
+  PEMASOK_FORM_EDIT: "PEMASOK_DELETE_CONFIRM_REFRESH",
+};
+
 const ModelPemasok = {
   kodePemasok: "",
   namaPemasok: "",
@@ -139,4 +144,5 @@ const PemasokForm = ({
   );
 };
 
+PemasokForm.activity = activity;
 export default PemasokForm;

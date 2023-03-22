@@ -2,6 +2,11 @@ import axios from "axios";
 import { Button } from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
 
+const activity = {
+  CANCEL: "PemasokDeleteConfirm.CANCEL",
+  REFRESH: "PemasokDeleteConfirm.REFRESH",
+};
+
 const PemasokDeleteConfirm = ({
   handleCallback,
   daftarPemasok,
@@ -14,7 +19,7 @@ const PemasokDeleteConfirm = ({
     PemasokService.removeAll(daftarPemasok)
       .then(
         axios.spread((...responses) => {
-          handleCallback(responses);
+          handleCallback(activity.REFRESH, responses);
         })
       )
       .catch((errors) => console.log(errors));
@@ -24,17 +29,29 @@ const PemasokDeleteConfirm = ({
     <>
       {daftarPemasok.length > 0 && (
         <>
-          <Button
-            variant={variant}
-            size={size}
-            className={classes}
-            onClick={handlePemasokServiceRemove}>
-            {textButton} {daftarPemasok.length} item
-          </Button>
+          <div
+            className={`btn-group ${classes}`}
+            role="group"
+            aria-label="Basic example">
+            <Button
+              variant={variant}
+              size={size}
+              onClick={handlePemasokServiceRemove}>
+              {textButton} {daftarPemasok.length} item
+            </Button>
+            <Button
+              variant={variant}
+              size={size}
+              onClick={() => handleCallback(activity.CANCEL)}>
+              Batal
+            </Button>
+          </div>
         </>
       )}
     </>
   );
 };
+
+PemasokDeleteConfirm.activity = activity;
 
 export default PemasokDeleteConfirm;

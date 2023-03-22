@@ -18,8 +18,12 @@ const PemasokList = () => {
   const [pilihPemasok, setPilihPemasok] = useState([]);
 
   const handleCallback = (activity, data) => {
-    handlePemasokServiceList();
-    setPilihPemasok([]);
+    if (activity === PemasokDeleteConfirm.activity.CANCEL) {
+      setPilihPemasok([]);
+    } else if (activity === PemasokDeleteConfirm.activity.REFRESH) {
+      handlePemasokServiceList();
+      setPilihPemasok([]);
+    }
   };
 
   const handlePilihPemasok = (kodePemasok) => {
