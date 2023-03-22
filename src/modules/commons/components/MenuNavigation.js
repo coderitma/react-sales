@@ -9,7 +9,7 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { Link, useNavigate } from "react-router-dom";
 import { BiBarChartSquare } from "react-icons/bi";
 
-const RightMenu = ({ title }) => {
+const MenuNavigation = ({ title }) => {
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -45,4 +45,4 @@ const RightMenu = ({ title }) => {
   );
 };
 
-export default RightMenu;
+export default MenuNavigation;

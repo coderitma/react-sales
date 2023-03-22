@@ -1,11 +1,9 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import BarangList from "./components/barang/BarangList";
-import Layout from "./components/Layout";
-import PemasokList from "./components/pemasok/PemasokList";
-import Protected from "./components/Protected";
-import LoginPage from "./components/users/LoginPage";
 import ModulAuth from "./modules/auth/ModulAuth";
+import ModulBarang from "./modules/barang/ModulBarang";
+import Layout from "./modules/commons/components/Layout";
+import PrivateLayout from "./modules/commons/components/PrivateLayout";
 import ModulPemasok from "./modules/pemasok/ModulPemasok";
 
 function App() {
@@ -17,17 +15,17 @@ function App() {
           <Route
             path="/barang"
             element={
-              <Protected title="Modul Barang">
-                <BarangList />
-              </Protected>
+              <PrivateLayout title="Modul Barang">
+                <ModulBarang />
+              </PrivateLayout>
             }
           />
           <Route
             path="/pemasok"
             element={
-              <Protected title="Modul Pemasok">
+              <PrivateLayout title="Modul Pemasok">
                 <ModulPemasok />
-              </Protected>
+              </PrivateLayout>
             }
           />
         </Route>

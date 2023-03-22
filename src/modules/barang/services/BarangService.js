@@ -1,10 +1,10 @@
 import axios from "axios";
-import config from "../config";
-import UserService from "./UserService";
+import config from "../../../config";
+import AuthService from "../../auth/services/AuthService";
 
 const conf = {
   headers: {
-    "x-access-token": UserService.getToken(),
+    "x-access-token": AuthService.getToken(),
   },
 };
 
@@ -47,10 +47,25 @@ const remove = (kodeBarang) => {
   );
 };
 
+const removeAll = (daftarKodeBarang) => {
+  let tasks = [];
+  for (let kodeBarang of daftarKodeBarang) {
+    tasks.push(
+      axios.delete(
+        `${config.API_BASE_URL}${config.API_ENDPOINT_BARANG}/${kodeBarang}`,
+        conf
+      )
+    );
+  }
+
+  return axios.all(tasks);
+};
+
 export default {
   list,
   create,
   get,
   edit,
   remove,
+  removeAll,
 };

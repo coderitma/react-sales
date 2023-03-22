@@ -1,10 +1,10 @@
 import axios from "axios";
 import config from "../../../config";
-import UserService from "../../../services/UserService";
+import AuthService from "../../auth/services/AuthService";
 
 const conf = {
   headers: {
-    "x-access-token": UserService.getToken(),
+    "x-access-token": AuthService.getToken(),
   },
 };
 

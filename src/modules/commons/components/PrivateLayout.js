@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserService from "../services/UserService";
-import RightMenu from "./misc/RightMenu";
+import AuthService from "../../auth/services/AuthService";
+import MenuNavigation from "./MenuNavigation";
 
 const PrivateLayout = ({ title, children }) => {
   let navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
-      let isLoggedIn = await UserService.tokenVerify();
+      let isLoggedIn = await AuthService.tokenVerify();
       if (!isLoggedIn) {
         navigate("/");
       }
@@ -18,7 +17,7 @@ const PrivateLayout = ({ title, children }) => {
 
   return (
     <>
-      <RightMenu title={title} />
+      <MenuNavigation title={title} />
       <div className="mt-4">{children}</div>
     </>
   );
