@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 import PemasokList from "./components/pemasok/PemasokList";
 import Protected from "./components/Protected";
 import LoginPage from "./components/users/LoginPage";
+import ModulPemasok from "./modules/pemasok/ModulPemasok";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             path="/pemasok"
             element={
               <Protected title="Modul Pemasok">
-                <PemasokList />
+                <ModulPemasok />
               </Protected>
             }
           />
