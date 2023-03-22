@@ -1,14 +1,33 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row, Table } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Row,
+  Table,
+} from "react-bootstrap";
 import PemasokService from "../../services/PemasokService";
 import PemasokForm from "./PemasokForm";
-import { FaSearch, FaPlus, FaPlusSquare } from "react-icons/fa";
+import { FaSearch, FaPlusSquare } from "react-icons/fa";
+import PemasokDeleteConfirm from "./PemasokDeleteConfirm";
 
 const PemasokList = () => {
   const [daftarPemasok, setDaftarPemasok] = useState([]);
+  const [pilihPemasok, setPilihPemasok] = useState([]);
 
   const handleCallback = (activity, data) => {
     handlePemasokServiceList();
+    setPilihPemasok([]);
+  };
+
+  const handlePilihPemasok = (kodePemasok) => {
+    if (pilihPemasok.includes(kodePemasok)) {
+      setPilihPemasok(pilihPemasok.filter((item) => item !== kodePemasok));
+    } else {
+      setPilihPemasok([...pilihPemasok, kodePemasok]);
+    }
   };
 
   const handlePemasokServiceList = () => {
@@ -23,6 +42,43 @@ const PemasokList = () => {
 
   useEffect(handlePemasokServiceList, []);
 
+  const componentInlineList = ({
+    kodePemasok,
+    namaPemasok,
+    alamatPemasok,
+    teleponPemasok,
+  }) => {
+    return (
+      <tr key={kodePemasok}>
+        <td>
+          <Form.Check
+            inline
+            onChange={() => handlePilihPemasok(kodePemasok)}
+            checked={pilihPemasok.includes(kodePemasok)}
+          />
+          {kodePemasok}
+        </td>
+        <td>{namaPemasok}</td>
+        <td>{alamatPemasok}</td>
+        <td>{teleponPemasok}</td>
+        <td>
+          <PemasokForm
+            handleCallback={handleCallback}
+            variant="secondary"
+            kodePemasok={kodePemasok}
+            size={"sm"}
+            title="Edit Pemasok"
+            textButton={
+              <>
+                <FaSearch /> Lihat
+              </>
+            }
+          />
+        </td>
+      </tr>
+    );
+  };
+
   return (
     <>
       <Container>
@@ -31,23 +87,33 @@ const PemasokList = () => {
             md={12}
             className="d-flex align-items-center flex-row justify-content-between">
             <h4>Daftar Pemasok</h4>
-            <PemasokForm
-              handleCallback={handleCallback}
-              variant="dark"
-              size={"sm"}
-              title="Tambah Pemasok"
-              textButton={
-                <>
-                  <FaPlusSquare /> Tambah
-                </>
-              }
-            />
+            <div>
+              <PemasokDeleteConfirm
+                daftarPemasok={pilihPemasok}
+                variant="outline-secondary"
+                size={"sm"}
+                textButton="Hapus"
+                classes={"mx-2"}
+                handleCallback={handleCallback}
+              />
+              <PemasokForm
+                handleCallback={handleCallback}
+                variant="dark"
+                size={"sm"}
+                title="Tambah Pemasok"
+                textButton={
+                  <>
+                    <FaPlusSquare /> Tambah
+                  </>
+                }
+              />
+            </div>
           </Col>
         </Row>
         <Row className="my-2">
           <Col md={12} sm={12}>
             <Card>
-              <Table striped hover responsive>
+              <Table responsive>
                 <thead>
                   <tr>
                     <th>Kode Pemasok</th>
@@ -59,28 +125,9 @@ const PemasokList = () => {
                 </thead>
                 <tbody>
                   {daftarPemasok.length > 0 &&
-                    daftarPemasok.map((pemasok) => (
-                      <tr key={pemasok.kodePemasok}>
-                        <td>{pemasok.kodePemasok}</td>
-                        <td>{pemasok.namaPemasok}</td>
-                        <td>{pemasok.alamatPemasok}</td>
-                        <td>{pemasok.teleponPemasok}</td>
-                        <td>
-                          <PemasokForm
-                            handleCallback={handleCallback}
-                            variant="secondary"
-                            kodePemasok={pemasok.kodePemasok}
-                            size={"sm"}
-                            title="Edit Pemasok"
-                            textButton={
-                              <>
-                                <FaSearch /> Lihat
-                              </>
-                            }
-                          />
-                        </td>
-                      </tr>
-                    ))}
+                    daftarPemasok.map((pemasok) =>
+                      componentInlineList(pemasok)
+                    )}
                 </tbody>
               </Table>
             </Card>

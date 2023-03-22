@@ -46,4 +46,18 @@ const remove = (kodePemasok) => {
   );
 };
 
-export default { list, create, edit, remove, get };
+const removeAll = (pilihPemasok) => {
+  let tasks = [];
+  for (let kodePemasok of pilihPemasok) {
+    tasks.push(
+      axios.delete(
+        `${config.API_BASE_URL}${config.API_ENDPOINT_PEMASOK}/${kodePemasok}`,
+        conf
+      )
+    );
+  }
+
+  return axios.all(tasks);
+};
+
+export default { list, create, edit, remove, get, removeAll };
