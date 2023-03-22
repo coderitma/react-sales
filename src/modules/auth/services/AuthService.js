@@ -1,7 +1,7 @@
 import axios from "axios";
-import config from "../config";
+import config from "../../../config";
 
-const loginService = ({ email, password }) => {
+const login = ({ email, password }) => {
   return axios.post(`${config.API_BASE_URL}${config.API_ENDPOINT_LOGIN}`, {
     email,
     password,
@@ -40,7 +40,7 @@ const getToken = () => {
 };
 
 export default {
-  loginService,
+  login,
   saveToken,
   getToken,
   tokenVerify,

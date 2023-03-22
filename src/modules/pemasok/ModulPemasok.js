@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Form, Row, Table } from "react-bootstrap";
-import PemasokService from "../../services/PemasokService";
+import { Card, Col, Container, Row, Table } from "react-bootstrap";
 import PemasokForm from "./components/PemasokForm";
-import { FaSearch, FaPlusSquare } from "react-icons/fa";
+import { FaPlusSquare } from "react-icons/fa";
 import PemasokDeleteConfirm from "./components/PemasokDeleteConfirm";
 import PemasokList from "./components/PemasokList";
+import PemasokService from "./services/PemasokService";
 
 const ModulPemasok = () => {
   const [daftarPemasok, setDaftarPemasok] = useState([]);
