@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
-import { FaSearch, FaTrashAlt } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
 import BarangService from "../../services/BarangService";
 
 const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
   const [query, setQuery] = useState({});
   const [show, setShow] = useState(false);
-  const [reset, setReset] = useState(false);
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -19,21 +18,25 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
       .then((response) => {
         if (callbackBarangSearchWidget) {
           if (response.data.length > 0) {
-            setReset(true);
             callbackBarangSearchWidget(response.data);
+            setShow(false);
+          } else {
+            alert("pencarian tidak ditemukan");
           }
-          setShow(false);
         }
       })
       .catch((error) => alert(error));
   };
 
-  const handleReset = () => {
-    setReset(false);
+  const handleClear = () => {
     setQuery({});
+    setShow(false);
     BarangService.list()
       .then((response) => {
-        callbackBarangSearchWidget(response.data);
+        if (callbackBarangSearchWidget) {
+          callbackBarangSearchWidget(response.data);
+          setShow(false);
+        }
       })
       .catch((error) => alert(error));
   };
@@ -43,11 +46,6 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
       <Button {...attr} onClick={() => setShow(true)}>
         <FaSearch /> Cari Barang
       </Button>
-      {reset && (
-        <Button {...attr} variant="secondary" onClick={handleReset}>
-          <FaTrashAlt /> Hapus Pencarian
-        </Button>
-      )}
       <Modal show={show} onHide={() => setShow(false)} size={"lg"}>
         <Modal.Header closeButton>
           <Modal.Title>Cari Barang</Modal.Title>
@@ -108,6 +106,9 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShow(false)}>
             Batal
+          </Button>
+          <Button onClick={handleClear} variant="secondary">
+            Clear
           </Button>
           <Button onClick={handleSearch}>Cari</Button>
         </Modal.Footer>
