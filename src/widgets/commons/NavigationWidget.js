@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { Badge } from "react-bootstrap";
 import ListGroup from "react-bootstrap/ListGroup";
 
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BiBarChartSquare } from "react-icons/bi";
 
-const MenuNavigation = ({ title }) => {
+const NavigationWidget = () => {
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -45,4 +43,4 @@ const MenuNavigation = ({ title }) => {
   );
 };
 
-export default MenuNavigation;
+export default NavigationWidget;

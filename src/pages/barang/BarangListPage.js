@@ -23,7 +23,7 @@ const BarangListPage = () => {
           md={12}
           className="d-flex justify-content-between align-items-center">
           <h4>Daftar Barang</h4>
-          <Button onClick={() => navigate("/barang/add")} variant="warning">
+          <Button onClick={() => navigate("/barang/add")}>
             <FaPlusCircle /> Tambah
           </Button>
         </Col>
@@ -52,22 +52,12 @@ const BarangListPage = () => {
                       <td>{barang.hargaJual}</td>
                       <td>{barang.jumlahBarang}</td>
                       <td>
-                        <div className="btn-group">
-                          <Button
-                            variant="outline-secondary"
-                            onClick={() =>
-                              navigate(`/barang/remove/${barang.kodeBarang}`)
-                            }>
-                            <FaTrash /> Hapus
-                          </Button>
-                          <Button
-                            variant="secondary"
-                            onClick={() =>
-                              navigate(`/barang/edit/${barang.kodeBarang}`)
-                            }>
-                            <FaEdit /> Edit
-                          </Button>
-                        </div>
+                        <Button
+                          onClick={() =>
+                            navigate(`/barang/edit/${barang.kodeBarang}`)
+                          }>
+                          <FaEdit /> Detail
+                        </Button>
                       </td>
                     </tr>
                   ))}

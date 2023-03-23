@@ -1,50 +1,40 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ModulBarang from "./modules/barang/ModulBarang";
-import Layout from "./modules/commons/components/Layout";
-import PrivateLayout from "./modules/commons/components/PrivateLayout";
-import ModulPemasok from "./modules/pemasok/ModulPemasok";
 import AuthLoginPage from "./pages/auth/AuthLoginPage";
 import BarangAddPage from "./pages/barang/BarangAddPage";
 import BarangEditPage from "./pages/barang/BarangEditPage";
 import BarangListPage from "./pages/barang/BarangListPage";
+import ProtectContainerWidget from "./widgets/auth/ProtectContainerWidget";
+import LayoutWidget from "./widgets/commons/LayoutWidget";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LayoutWidget />}>
           <Route index element={<AuthLoginPage />} />
           <Route
             path="/barang"
             element={
-              <PrivateLayout title="Modul Barang">
+              <ProtectContainerWidget>
                 <BarangListPage />
-              </PrivateLayout>
+              </ProtectContainerWidget>
             }
           />
           <Route
             path="/barang/add"
             element={
-              <PrivateLayout title="Modul Barang">
+              <ProtectContainerWidget>
                 <BarangAddPage />
-              </PrivateLayout>
+              </ProtectContainerWidget>
             }
           />
           <Route
             path="/barang/edit/:kodeBarang"
             element={
-              <PrivateLayout>
+              <ProtectContainerWidget>
                 <BarangEditPage />
-              </PrivateLayout>
-            }
-          />
-          <Route
-            path="/pemasok"
-            element={
-              <PrivateLayout title="Modul Pemasok">
-                <ModulPemasok />
-              </PrivateLayout>
+              </ProtectContainerWidget>
             }
           />
         </Route>

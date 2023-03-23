@@ -23,6 +23,18 @@ const BarangEditPage = () => {
       .catch((error) => alert(error));
   };
 
+  const handleBarangServiceRemove = () => {
+    let confirmRemove = window.confirm(`Yakin ingin menghapus ${kodeBarang}?`);
+    if (confirmRemove) {
+      BarangService.remove(kodeBarang)
+        .then((response) => {
+          alert("Berhasil menghapus barang");
+          navigate("/barang");
+        })
+        .catch((error) => alert(error));
+    }
+  };
+
   useEffect(() => {
     BarangService.get(kodeBarang)
       .then((response) => {
@@ -74,7 +86,7 @@ const BarangEditPage = () => {
                   onChange={handleInput}
                 />
               </Form.Group>
-              <Form.Group className="mt-2">
+              <Form.Group className="mt-2 mb-4">
                 <Form.Label>Jumlah Barang</Form.Label>
                 <Form.Control
                   name="jumlahBarang"
@@ -83,18 +95,21 @@ const BarangEditPage = () => {
                   onChange={handleInput}
                 />
               </Form.Group>
-              <div className="d-grid gap-2">
-                <Button
-                  variant="warning"
-                  className="mt-3"
-                  onClick={handleBarangServiceEdit}>
-                  Simpan
+              <div className="d-flex justify-content-between">
+                <Button variant="danger" onClick={handleBarangServiceRemove}>
+                  Hapus
                 </Button>
-                <Button
-                  onClick={() => navigate(-1)}
-                  variant="outline-secondary">
-                  Batal
-                </Button>
+                <div>
+                  <Button onClick={() => navigate(-1)} variant="secondary">
+                    Batal
+                  </Button>
+                  <Button
+                    variant="warning"
+                    className="ms-2"
+                    onClick={handleBarangServiceEdit}>
+                    Simpan Perubahan
+                  </Button>
+                </div>
               </div>
             </Card.Body>
           </Card>
