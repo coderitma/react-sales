@@ -1,12 +1,12 @@
-import axios from "axios";
 import config from "../config";
+import HTTPService from "./HTTPService";
 
 const ENDPOINT_LOGIN = "/users/login";
 const ENDPOINT_CHECK_TOKEN = "/hello/world";
 const KEY_LOCAL_STORAGE_TOKEN = "TOKEN";
 
 const login = ({ email, password }) => {
-  return axios.post(`${config.BASE_URL}${ENDPOINT_LOGIN}`, {
+  return HTTPService.post(`${config.BASE_URL}${ENDPOINT_LOGIN}`, {
     email,
     password,
   });
@@ -17,7 +17,7 @@ const tokenVerify = async () => {
 
   try {
     if (token) {
-      const result = await axios.post(
+      const result = await HTTPService.post(
         `${config.BASE_URL}${ENDPOINT_CHECK_TOKEN}`,
         {},
         {

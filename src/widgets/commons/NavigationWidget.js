@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import ListGroup from "react-bootstrap/ListGroup";
 
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useNavigate } from "react-router-dom";
 import { BiBarChartSquare } from "react-icons/bi";
@@ -17,12 +19,32 @@ const NavigationWidget = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar bg="primary" variant="dark">
         <Container>
           <Navbar.Brand href="#" onClick={handleShow}>
-            <BiBarChartSquare className="text-warning" size={"1.5em"} />
-            &nbsp;&nbsp;Brick Sales
+            <BiBarChartSquare size={"1.5em"} />
+            &nbsp;Brick Sales
           </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="me-auto">
+              {/* <Nav.Link>Barang</Nav.Link>
+              <Nav.Link>Pemasok</Nav.Link> */}
+              <NavDropdown title="Master" id="basic-nav-dropdown">
+                <NavDropdown.Item onClick={() => navigate("/barang")}>
+                  Barang
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={() => navigate("/pemasok")}>
+                  Pemasok
+                </NavDropdown.Item>
+              </NavDropdown>
+              <NavDropdown title="Transaksi" id="basic-nav-dropdown">
+                <NavDropdown.Item href="#action/3.1">
+                  Penjualan
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
 

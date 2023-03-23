@@ -1,6 +1,6 @@
-import axios from "axios";
 import config from "../config";
 import AuthService from "./AuthService";
+import HTTPService from "./HTTPService";
 
 const ENDPOINT = `${config.BASE_URL}/barang`;
 const CONFIG = {
@@ -10,24 +10,28 @@ const CONFIG = {
 };
 
 const list = () => {
-  return axios.get(ENDPOINT, CONFIG);
+  return HTTPService.get(ENDPOINT, CONFIG);
 };
 
 const create = (barang) => {
-  return axios.post(ENDPOINT, { ...barang }, CONFIG);
+  return HTTPService.post(ENDPOINT, { ...barang }, CONFIG);
 };
 
 const get = (kodeBarang) => {
-  return axios.get(`${ENDPOINT}/${kodeBarang}`, CONFIG);
+  return HTTPService.get(`${ENDPOINT}/${kodeBarang}`, CONFIG);
 };
 
 const edit = (barang) => {
   const { kodeBarang, ...dataBarang } = barang;
-  return axios.put(`${ENDPOINT}/${kodeBarang}`, { ...dataBarang }, CONFIG);
+  return HTTPService.put(
+    `${ENDPOINT}/${kodeBarang}`,
+    { ...dataBarang },
+    CONFIG
+  );
 };
 
 const remove = (kodeBarang) => {
-  return axios.delete(`${ENDPOINT}/${kodeBarang}`, CONFIG);
+  return HTTPService.delete(`${ENDPOINT}/${kodeBarang}`, CONFIG);
 };
 
 export default { list, create, get, edit, remove };
