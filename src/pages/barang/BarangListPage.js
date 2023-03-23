@@ -8,19 +8,29 @@ import BarangSearchWidget from "../../widgets/barang/BarangSearchWidget";
 const BarangListPage = () => {
   const navigate = useNavigate();
   const [daftarBarang, setDaftarBarang] = useState([]);
+  const [init, setInit] = useState(false);
 
   useEffect(() => {
+    console.log("render....");
+
     BarangService.list()
-      .then((response) => setDaftarBarang(response.data))
+      .then((response) => {
+        setDaftarBarang(response.data);
+        setInit(true);
+      })
       .catch((error) => alert(error));
+    return;
   }, []);
 
   const callbackBarangSearchWidget = (data) => {
     setDaftarBarang(data);
   };
 
+  if (!init) return "ups";
+
   return (
     <Container>
+      {console.log("render template")}
       <Row>
         <Col
           md={12}
