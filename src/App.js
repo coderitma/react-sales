@@ -5,6 +5,7 @@ import BarangAddPage from "./pages/barang/BarangAddPage";
 import BarangEditPage from "./pages/barang/BarangEditPage";
 import BarangListPage from "./pages/barang/BarangListPage";
 import PemasokAddPage from "./pages/pemasok/PemasokAddPage";
+import PemasokEditPage from "./pages/pemasok/PemasokEditPage";
 import PemasokListPage from "./pages/pemasok/PemasokListPage";
 import ProtectContainerWidget from "./widgets/auth/ProtectContainerWidget";
 import LayoutWidget from "./widgets/commons/LayoutWidget";
@@ -52,6 +53,14 @@ function App() {
             element={
               <ProtectContainerWidget>
                 <PemasokAddPage />
+              </ProtectContainerWidget>
+            }
+          />
+          <Route
+            path="/pemasok/edit/:kodePemasok"
+            element={
+              <ProtectContainerWidget>
+                <PemasokEditPage />
               </ProtectContainerWidget>
             }
           />
