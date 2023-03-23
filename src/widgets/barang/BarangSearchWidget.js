@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 import BarangService from "../../services/BarangService";
 
 const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
-  const [query, setQuery] = useState({});
+  const [query, setQuery] = useState({
+    kodeBarang: "SS",
+  });
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    console.log("query berubah");
+  }, [query]);
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -107,9 +113,7 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
           <Button variant="secondary" onClick={() => setShow(false)}>
             Batal
           </Button>
-          <Button onClick={handleClear} variant="secondary">
-            Clear
-          </Button>
+
           <Button onClick={handleSearch}>Cari</Button>
         </Modal.Footer>
       </Modal>
