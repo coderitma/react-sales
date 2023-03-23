@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import BarangService from "../../services/BarangService";
+import BarangSearchWidget from "../../widgets/barang/BarangSearchWidget";
 
 const BarangListPage = () => {
   const navigate = useNavigate();
@@ -14,6 +15,10 @@ const BarangListPage = () => {
       .catch((error) => alert(error));
   }, []);
 
+  const callbackBarangSearchWidget = (data) => {
+    setDaftarBarang(data);
+  };
+
   return (
     <Container>
       <Row>
@@ -21,9 +26,15 @@ const BarangListPage = () => {
           md={12}
           className="d-flex justify-content-between align-items-center">
           <h4>Daftar Barang</h4>
-          <Button onClick={() => navigate("/barang/add")}>
-            <FaPlusCircle /> Tambah
-          </Button>
+          <div>
+            <BarangSearchWidget
+              attr={{ className: "me-2" }}
+              callbackBarangSearchWidget={callbackBarangSearchWidget}
+            />
+            <Button onClick={() => navigate("/barang/add")}>
+              <FaPlusCircle /> Tambah
+            </Button>
+          </div>
         </Col>
       </Row>
       <Row className="mt-3">

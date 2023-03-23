@@ -7,7 +7,7 @@ const HTTPService = axios.create({
 HTTPService.interceptors.response.use((response) => {
   // console.log("Response:", JSON.stringify(response, null, 2));
   if (response.status === 401) {
-    return (window.location.href = "/");
+    window.location.href = "/";
   }
   return response;
 });
