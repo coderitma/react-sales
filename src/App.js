@@ -6,6 +6,7 @@ import PrivateLayout from "./modules/commons/components/PrivateLayout";
 import ModulPemasok from "./modules/pemasok/ModulPemasok";
 import AuthLoginPage from "./pages/auth/AuthLoginPage";
 import BarangAddPage from "./pages/barang/BarangAddPage";
+import BarangEditPage from "./pages/barang/BarangEditPage";
 import BarangListPage from "./pages/barang/BarangListPage";
 
 function App() {
@@ -27,6 +28,14 @@ function App() {
             element={
               <PrivateLayout title="Modul Barang">
                 <BarangAddPage />
+              </PrivateLayout>
+            }
+          />
+          <Route
+            path="/barang/edit/:kodeBarang"
+            element={
+              <PrivateLayout>
+                <BarangEditPage />
               </PrivateLayout>
             }
           />
