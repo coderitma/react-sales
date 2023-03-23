@@ -103,10 +103,7 @@ const BarangEditPage = () => {
                   <Button onClick={() => navigate(-1)} variant="secondary">
                     Batal
                   </Button>
-                  <Button
-                    variant="warning"
-                    className="ms-2"
-                    onClick={handleBarangServiceEdit}>
+                  <Button className="ms-2" onClick={handleBarangServiceEdit}>
                     Simpan Perubahan
                   </Button>
                 </div>

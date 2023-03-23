@@ -17,7 +17,7 @@ const AuthLoginPage = () => {
     AuthService.login(user)
       .then((response) => {
         AuthService.saveToken(response.data.token);
-        setTimeout(() => navigate("/barang"), 1000);
+        window.location.href = "/barang";
       })
       .catch((error) => alert(error));
   };

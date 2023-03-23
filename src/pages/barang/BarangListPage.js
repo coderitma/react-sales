@@ -9,11 +9,9 @@ const BarangListPage = () => {
   const [daftarBarang, setDaftarBarang] = useState([]);
 
   useEffect(() => {
-    setTimeout(() => {
-      BarangService.list()
-        .then((response) => setDaftarBarang(response.data))
-        .catch((error) => alert(error));
-    }, 2000);
+    BarangService.list()
+      .then((response) => setDaftarBarang(response.data))
+      .catch((error) => alert(error));
   }, []);
 
   return (

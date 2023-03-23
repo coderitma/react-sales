@@ -74,18 +74,14 @@ const BarangAddPage = () => {
                   onChange={handleInput}
                 />
               </Form.Group>
-              <div className="d-grid gap-2">
+              <div className="d-flex justify-content-end mt-3">
                 <Button
-                  variant="warning"
-                  className="mt-3"
-                  onClick={handleBarangServiceCreate}>
-                  Simpan
-                </Button>
-                <Button
+                  className="me-2"
                   onClick={() => navigate(-1)}
-                  variant="outline-secondary">
+                  variant="secondary">
                   Batal
                 </Button>
+                <Button onClick={handleBarangServiceCreate}>Simpan</Button>
               </div>
             </Card.Body>
           </Card>
