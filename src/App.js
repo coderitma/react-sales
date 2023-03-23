@@ -1,22 +1,32 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ModulAuth from "./modules/auth/ModulAuth";
 import ModulBarang from "./modules/barang/ModulBarang";
 import Layout from "./modules/commons/components/Layout";
 import PrivateLayout from "./modules/commons/components/PrivateLayout";
 import ModulPemasok from "./modules/pemasok/ModulPemasok";
+import AuthLoginPage from "./pages/auth/AuthLoginPage";
+import BarangAddPage from "./pages/barang/BarangAddPage";
+import BarangListPage from "./pages/barang/BarangListPage";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<ModulAuth />} />
+          <Route index element={<AuthLoginPage />} />
           <Route
             path="/barang"
             element={
               <PrivateLayout title="Modul Barang">
-                <ModulBarang />
+                <BarangListPage />
+              </PrivateLayout>
+            }
+          />
+          <Route
+            path="/barang/add"
+            element={
+              <PrivateLayout title="Modul Barang">
+                <BarangAddPage />
               </PrivateLayout>
             }
           />

@@ -1,5 +1,6 @@
 const config = {
   API_BASE_URL: "http://localhost:3000", // ketika proxy diaktifkan untuk menangani cors, setup self host di sini.
+  BASE_URL: "http://localhost:3000", // ketika proxy diaktifkan untuk menangani cors, setup self host di sini.
   API_ENDPOINT_LOGIN: "/users/login",
   API_ENDPOINT_CHECK_TOKEN: "/hello/world",
   API_ENDPOINT_BARANG: "/barang",

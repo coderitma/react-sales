@@ -15,11 +15,11 @@ const ModelPemasok = {
   teleponPemasok: "",
 };
 
-const PemasokForm = ({
+const PemasokFormComponent = ({
   handleCallback,
+  kodePemasok,
   variant,
   size,
-  kodePemasok,
   title,
   textButton,
 }) => {
@@ -63,6 +63,17 @@ const PemasokForm = ({
     PemasokService.edit(pemasok)
       .then((response) => {
         handleCallback(null, pemasok);
+        handleClose();
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  const handlePemasokServiceRemove = () => {
+    PemasokService.remove(kodePemasok)
+      .then(() => {
+        handleCallback();
         handleClose();
       })
       .catch((error) => {
@@ -144,5 +155,5 @@ const PemasokForm = ({
   );
 };
 
-PemasokForm.activity = activity;
-export default PemasokForm;
+PemasokFormComponent.activity = activity;
+export default PemasokFormComponent;

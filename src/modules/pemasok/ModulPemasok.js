@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Table } from "react-bootstrap";
-import PemasokForm from "./components/PemasokForm";
+import PemasokForm from "./components/PemasokFormComponent";
 import { FaPlusSquare } from "react-icons/fa";
 import PemasokDeleteConfirm from "./components/PemasokDeleteConfirm";
 import PemasokList from "./components/PemasokList";

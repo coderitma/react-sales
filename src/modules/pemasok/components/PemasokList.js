@@ -1,5 +1,5 @@
 import { Form } from "react-bootstrap";
-import PemasokForm from "./PemasokForm";
+import PemasokForm from "./PemasokFormComponent";
 import { FaSearch } from "react-icons/fa";
 
 const PemasokList = ({
