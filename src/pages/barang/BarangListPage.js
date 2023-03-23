@@ -28,7 +28,7 @@ const BarangListPage = () => {
           <h4>Daftar Barang</h4>
           <div>
             <BarangSearchWidget
-              attr={{ className: "me-2" }}
+              attr={{ className: "me-2", variant: "outline-primary" }}
               callbackBarangSearchWidget={callbackBarangSearchWidget}
             />
             <Button onClick={() => navigate("/barang/add")}>
