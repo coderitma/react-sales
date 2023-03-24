@@ -37,8 +37,8 @@ const NavigationWidget = () => {
                 </NavDropdown.Item>
               </NavDropdown>
               <NavDropdown title="Transaksi" id="basic-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">
-                  Penjualan
+                <NavDropdown.Item onClick={() => navigate("/pembelian/add")}>
+                  Pembelian
                 </NavDropdown.Item>
               </NavDropdown>
             </Nav>
