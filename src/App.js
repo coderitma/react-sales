@@ -7,6 +7,7 @@ import BarangListPage from "./pages/barang/BarangListPage";
 import PemasokAddPage from "./pages/pemasok/PemasokAddPage";
 import PemasokEditPage from "./pages/pemasok/PemasokEditPage";
 import PemasokListPage from "./pages/pemasok/PemasokListPage";
+import PembelianAddPage from "./pages/pembelian/PembelianAddPage";
 import ProtectContainerWidget from "./widgets/auth/ProtectContainerWidget";
 import LayoutWidget from "./widgets/commons/LayoutWidget";
 
@@ -61,6 +62,14 @@ function App() {
             element={
               <ProtectContainerWidget>
                 <PemasokEditPage />
+              </ProtectContainerWidget>
+            }
+          />
+          <Route
+            path="/pembelian/add"
+            element={
+              <ProtectContainerWidget>
+                <PembelianAddPage />
               </ProtectContainerWidget>
             }
           />
