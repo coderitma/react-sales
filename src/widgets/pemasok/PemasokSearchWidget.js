@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
-import BarangService from "../../services/BarangService";
+import PemasokService from "../../services/PemasokService";
 
-const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
-  const [query, setQuery] = useState({
-    kodeBarang: "SS",
-  });
+const PemasokSearchWidget = ({ attr, callbackPemasokSearchWidget }) => {
+  const [query, setQuery] = useState({});
   const [show, setShow] = useState(false);
 
   const handleInput = (e) => {
@@ -16,11 +14,11 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
   };
 
   const handleSearch = () => {
-    BarangService.list(query)
+    PemasokService.list(query)
       .then((response) => {
-        if (callbackBarangSearchWidget) {
+        if (callbackPemasokSearchWidget) {
           if (response.data.length > 0) {
-            callbackBarangSearchWidget(response.data);
+            callbackPemasokSearchWidget(response.data);
             setShow(false);
           } else {
             alert("pencarian tidak ditemukan");
@@ -33,11 +31,15 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
   const handleClear = () => {
     setQuery({});
     setShow(false);
-    BarangService.list()
+    PemasokService.list(query)
       .then((response) => {
-        if (callbackBarangSearchWidget) {
-          callbackBarangSearchWidget(response.data);
-          setShow(false);
+        if (callbackPemasokSearchWidget) {
+          if (response.data.length > 0) {
+            callbackPemasokSearchWidget(response.data);
+            setShow(false);
+          } else {
+            alert("pencarian tidak ditemukan");
+          }
         }
       })
       .catch((error) => alert(error));
@@ -46,59 +48,50 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
   return (
     <>
       <Button {...attr} onClick={() => setShow(true)}>
-        <FaSearch /> Cari Barang
+        <FaSearch /> Cari Pemasok
       </Button>
       <Modal show={show} onHide={() => setShow(false)} size={"lg"}>
         <Modal.Header closeButton>
-          <Modal.Title>Cari Barang</Modal.Title>
+          <Modal.Title>Cari Pemasok</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Row>
             <Col>
               <Form.Group className="mb-2">
-                <Form.Label>Kode Barang</Form.Label>
+                <Form.Label>Kode Pemasok</Form.Label>
                 <Form.Control
-                  name="kodeBarang"
+                  name="kodePemasok"
                   type="text"
-                  value={query.kodeBarang || ""}
+                  value={query.kodePemasok || ""}
                   onChange={handleInput}
                 />
               </Form.Group>
               <Form.Group className="mb-2">
-                <Form.Label>Nama Barang</Form.Label>
+                <Form.Label>Nama Pemasok</Form.Label>
                 <Form.Control
-                  name="namaBarang"
+                  name="namaPemasok"
                   type="text"
-                  value={query.namaBarang || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Jumlah Barang</Form.Label>
-                <Form.Control
-                  name="jumlahBarang"
-                  type="number"
-                  value={query.jumlahBarang || ""}
+                  value={query.namaPemasok || ""}
                   onChange={handleInput}
                 />
               </Form.Group>
             </Col>
             <Col>
               <Form.Group className="mb-2">
-                <Form.Label>Harga Beli</Form.Label>
+                <Form.Label>Alamat Pemasok</Form.Label>
                 <Form.Control
-                  name="hargaBeli"
-                  type="number"
-                  value={query.hargaBeli || ""}
+                  name="alamatPemasok"
+                  type="text"
+                  value={query.alamatPemasok || ""}
                   onChange={handleInput}
                 />
               </Form.Group>
               <Form.Group className="mb-2">
-                <Form.Label>Harga Jual</Form.Label>
+                <Form.Label>Telepon Pemasok</Form.Label>
                 <Form.Control
-                  name="hargaJual"
-                  type="number"
-                  value={query.hargaJual || ""}
+                  name="teleponPemasok"
+                  type="text"
+                  value={query.teleponPemasok || ""}
                   onChange={handleInput}
                 />
               </Form.Group>
@@ -117,4 +110,4 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
   );
 };
 
-export default BarangSearchWidget;
+export default PemasokSearchWidget;
