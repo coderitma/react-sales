@@ -9,13 +9,16 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import { FaSearch, FaTrash } from "react-icons/fa";
+import { FaSave, FaSearch, FaTrash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import PembelianService from "../../services/PembelianService";
 import helpers from "../../utils/helpers";
 import BarangMultipleChoiceWidget from "../../widgets/barang/BarangMultipleChoiceWidget";
 import PemasokChoiceWidget from "../../widgets/pemasok/PemasokChoiceWidget";
 import PembelianInvoiceReviewWidget from "../../widgets/pembelian/PembelianInvoiceReviewWidget";
 
 const PembelianAddPage = () => {
+  const navigate = useNavigate();
   const [pembelian, setPembelian] = useState({
     faktur: "",
     tanggal: "",
@@ -53,6 +56,17 @@ const PembelianAddPage = () => {
     });
   };
 
+  const handlePembelianServiceCreate = () => {
+    PembelianService.create(pembelian)
+      .then((response) => {
+        alert("Berhasil menambahkan transaksi");
+        navigate("/pembelian");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   const callbackBarangMultipleChoiceWidget = (data) => {
     if (
       !helpers.itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarBarang)
@@ -87,7 +101,6 @@ const PembelianAddPage = () => {
 
   return (
     <Container>
-      {/* {JSON.stringify(pembelian)} */}
       <Row>
         <Col md={6}>
           <PembelianInvoiceReviewWidget pembelian={pembelian} />
@@ -176,6 +189,13 @@ const PembelianAddPage = () => {
                 ))}
               </tbody>
             </Table>
+          </Card>
+          <Card className="mt-4">
+            <Card.Body className="d-flex justify-content-end">
+              <Button onClick={handlePembelianServiceCreate}>
+                <FaSave /> Simpan
+              </Button>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
