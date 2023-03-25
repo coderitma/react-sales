@@ -8,6 +8,7 @@ import PemasokAddPage from "./pages/pemasok/PemasokAddPage";
 import PemasokEditPage from "./pages/pemasok/PemasokEditPage";
 import PemasokListPage from "./pages/pemasok/PemasokListPage";
 import PembelianAddPage from "./pages/pembelian/PembelianAddPage";
+import PembelianListPage from "./pages/pembelian/PembelianListPage";
 import ProtectContainerWidget from "./widgets/auth/ProtectContainerWidget";
 import LayoutWidget from "./widgets/commons/LayoutWidget";
 
@@ -62,6 +63,14 @@ function App() {
             element={
               <ProtectContainerWidget>
                 <PemasokEditPage />
+              </ProtectContainerWidget>
+            }
+          />
+          <Route
+            path="/pembelian"
+            element={
+              <ProtectContainerWidget>
+                <PembelianListPage />
               </ProtectContainerWidget>
             }
           />
