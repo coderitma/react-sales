@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
+import PembelianInvoiceReviewWidget from "../../widgets/pembelian/PembelianInvoiceReviewWidget";
 
 const PembelianListPage = () => {
   const navigate = useNavigate();
@@ -58,9 +59,10 @@ const PembelianListPage = () => {
                       <td>{pembelian.pemasok.kodePemasok}</td>
                       <td>{pembelian.total}</td>
                       <td>
-                        <Button>
-                          <FaEdit /> Detail
-                        </Button>
+                        <PembelianInvoiceReviewWidget
+                          pembelian={pembelian}
+                          modal={true}
+                        />
                       </td>
                     </tr>
                   ))}
