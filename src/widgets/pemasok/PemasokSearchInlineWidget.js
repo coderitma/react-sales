@@ -28,10 +28,6 @@ const PemasokSearchInlineWidget = ({
     callbackPemasokSearchInlineWidget(query);
   };
 
-  const handleClear = () => {
-    setQuery({});
-  };
-
   return (
     <>
       <InputGroup>
