@@ -55,7 +55,7 @@ const PembelianInvoiceReviewWidget = ({ pembelian, modal, attr }) => {
                     <td>{item.kodeBarang}</td>
                     <td>{item.namaBarang}</td>
                     <td>{item.hargaBeli}</td>
-                    <td>{item.jumlahBarang}</td>
+                    <td>{item.jumlahBeli}</td>
                   </tr>
                 ))}
                 <tr>

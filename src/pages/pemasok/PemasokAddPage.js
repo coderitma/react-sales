@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
+import { FaArrowLeft, FaSave } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PemasokService from "../../services/PemasokService";
+import NavigationWidget from "../../widgets/commons/NavigationWidget";
 
 const PemasokAddPage = () => {
   const navigate = useNavigate();
@@ -25,62 +27,72 @@ const PemasokAddPage = () => {
   };
 
   return (
-    <Container>
-      <Row className={"d-flex justify-content-center align-items-center my-4"}>
-        <Col md={6}>
-          <Card>
-            <Card.Body>
-              <Card.Title>Tambah Pemasok</Card.Title>
-              <Form.Group className="mt-2">
-                <Form.Label>Kode Pemasok</Form.Label>
-                <Form.Control
-                  name="kodePemasok"
-                  type="text"
-                  value={pemasok.kodePemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label>Nama Pemasok</Form.Label>
-                <Form.Control
-                  name="namaPemasok"
-                  type="text"
-                  value={pemasok.namaPemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label>Alamat Pemasok</Form.Label>
-                <Form.Control
-                  name="alamatPemasok"
-                  type="text"
-                  value={pemasok.alamatPemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label>Telepon Pemasok</Form.Label>
-                <Form.Control
-                  name="teleponPemasok"
-                  type="text"
-                  value={pemasok.teleponPemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <div className="d-flex justify-content-end mt-3">
-                <Button
-                  className="me-2"
-                  onClick={() => navigate(-1)}
-                  variant="secondary">
-                  Batal
-                </Button>
-                <Button onClick={handlePemasokServiceCreate}>Simpan</Button>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <NavigationWidget
+        actionTop={
+          <>
+            <Button
+              className="me-2"
+              onClick={() => navigate(-1)}
+              variant="secondary">
+              <FaArrowLeft /> Kembali
+            </Button>
+            <Button onClick={handlePemasokServiceCreate}>
+              <FaSave /> Simpan
+            </Button>
+          </>
+        }>
+        <Card>
+          <Card.Header>
+            <h5>Tambah Pemasok</h5>
+          </Card.Header>
+          <Card.Body>
+            <Form.Group className="mt-2">
+              <Form.Label>Kode Pemasok</Form.Label>
+              <Form.Control
+                name="kodePemasok"
+                type="text"
+                value={pemasok.kodePemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label>Nama Pemasok</Form.Label>
+              <Form.Control
+                name="namaPemasok"
+                type="text"
+                value={pemasok.namaPemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label>Alamat Pemasok</Form.Label>
+              <Form.Control
+                name="alamatPemasok"
+                type="text"
+                value={pemasok.alamatPemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label>Telepon Pemasok</Form.Label>
+              <Form.Control
+                name="teleponPemasok"
+                type="text"
+                value={pemasok.teleponPemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+          </Card.Body>
+        </Card>
+      </NavigationWidget>
+      <Container>
+        <Row
+          className={"d-flex justify-content-center align-items-center my-4"}>
+          <Col md={6}></Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

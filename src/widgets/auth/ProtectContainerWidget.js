@@ -17,8 +17,7 @@ const ProtectContainerWidget = ({ children }) => {
 
   return (
     <>
-      <NavigationWidget />
-      <div className="mt-4">{children}</div>
+      <div>{children}</div>
     </>
   );
 };

@@ -76,9 +76,9 @@ const BarangSearchWidget = ({ attr, callbackBarangSearchWidget }) => {
               <Form.Group className="mb-2">
                 <Form.Label>Jumlah Barang</Form.Label>
                 <Form.Control
-                  name="jumlahBarang"
+                  name="jumlahBeli"
                   type="number"
-                  value={query.jumlahBarang || ""}
+                  value={query.jumlahBeli || ""}
                   onChange={handleInput}
                 />
               </Form.Group>

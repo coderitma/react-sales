@@ -8,8 +8,10 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useNavigate } from "react-router-dom";
 import { BiBarChartSquare } from "react-icons/bi";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { FaChartArea, FaChartBar, FaChartLine, FaTable } from "react-icons/fa";
 
-const NavigationWidget = () => {
+const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
@@ -19,46 +21,54 @@ const NavigationWidget = () => {
 
   return (
     <>
-      <Navbar bg="primary" variant="dark">
+      <Navbar>
         <Container>
-          <Navbar.Brand href="#" onClick={handleShow}>
-            <BiBarChartSquare size={"1.5em"} />
-            &nbsp;Brick Sales
+          <Navbar.Brand href="#">
+            <BiBarChartSquare className="text-primary" size={"1.5em"} />
+            &nbsp;Coderitma SSP
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <NavDropdown title="Master" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => navigate("/barang")}>
-                  Barang
-                </NavDropdown.Item>
-                <NavDropdown.Item onClick={() => navigate("/pemasok")}>
-                  Pemasok
-                </NavDropdown.Item>
-              </NavDropdown>
-              <NavDropdown title="Transaksi" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={() => navigate("/pembelian")}>
-                  Pembelian
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className="justify-content-end">
+            <div className="d-flex">{actionTop}</div>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Menu</Offcanvas.Title>
-        </Offcanvas.Header>
-        <ListGroup variant="flush">
-          <ListGroup.Item action onClick={() => navigate("/barang")}>
-            Barang
-          </ListGroup.Item>
-          <ListGroup.Item action onClick={() => navigate("/pemasok")}>
-            Pemasok
-          </ListGroup.Item>
-        </ListGroup>
-      </Offcanvas>
+      <Container className="mt-4">
+        <Row>
+          <Col md={2}>
+            {buttonCreate}
+            <Nav defaultActiveKey="/" className="flex-column">
+              <Nav.Link eventKey="disabled" disabled>
+                <FaTable />
+                &nbsp;&nbsp;&nbsp;Master
+              </Nav.Link>
+              <Nav.Link eventKey="/barang">Barang</Nav.Link>
+              <Nav.Link
+                eventKey="/pemasok"
+                defaultActiveKey="/pemasok"
+                onClick={() => navigate("/pemasok")}>
+                Pemasok
+              </Nav.Link>
+              <Nav.Link eventKey="disabled" disabled>
+                <FaChartArea />
+                &nbsp;&nbsp;&nbsp;Transaksi
+              </Nav.Link>
+              <Nav.Link eventKey="link-1">Pembelian</Nav.Link>
+              <Nav.Link eventKey="link-2">Penjualan</Nav.Link>
+              <Nav.Link eventKey="disabled" disabled>
+                <FaChartBar />
+                &nbsp;&nbsp;&nbsp;Laporan
+              </Nav.Link>
+              <Nav.Link href="/home">Laporan Master</Nav.Link>
+              <Nav.Link href="/home">Laporan Pembelian</Nav.Link>
+              <Nav.Link href="/home">Laporan Penjualan</Nav.Link>
+            </Nav>
+          </Col>
+          <Col md={10}>{children}</Col>
+        </Row>
+      </Container>
     </>
   );
 };

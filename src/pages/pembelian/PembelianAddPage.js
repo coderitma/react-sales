@@ -26,8 +26,7 @@ const PembelianAddPage = () => {
     pemasok: {},
     item: [],
   });
-
-  const [daftarBarang, setDaftarBarang] = useState([]);
+  const [daftarItemBeli, setDaftarItemBeli] = useState([]);
   const [pemasok, setPemasok] = useState({});
 
   const handleInput = (e) => {
@@ -36,21 +35,21 @@ const PembelianAddPage = () => {
     setPembelian((values) => ({ ...values, [name]: value }));
   };
 
-  const handleInputDaftarBarang = (e, index) => {
+  const handleInputDaftarItemBeli = (e, index) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setDaftarBarang((values) => {
+    setDaftarItemBeli((values) => {
       const result = [...values];
       result[index][name] = value;
       return result;
     });
   };
 
-  const handleRemoveItem = (barang) => {
-    setDaftarBarang((values) => {
+  const handleRemoveItem = (itemBeli) => {
+    setDaftarItemBeli((values) => {
       const result = [...values];
-      let index = result.indexOf(barang);
+      let index = result.indexOf(itemBeli);
       result.splice(index, 1);
       return result;
     });
@@ -69,10 +68,11 @@ const PembelianAddPage = () => {
 
   const callbackBarangMultipleChoiceWidget = (data) => {
     if (
-      !helpers.itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarBarang)
+      !helpers.itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)
     ) {
-      setDaftarBarang((values) => {
+      setDaftarItemBeli((values) => {
         const result = [...values];
+        data.jumlahBeli = 1;
         result.push(data);
         return result;
       });
@@ -87,13 +87,13 @@ const PembelianAddPage = () => {
 
   useEffect(() => {
     let sum = 0;
-    if (daftarBarang.length > 0) {
-      for (let item of daftarBarang) {
-        sum += item.hargaBeli * parseInt(item.jumlahBarang);
+    if (daftarItemBeli.length > 0) {
+      for (let itemBeli of daftarItemBeli) {
+        sum += itemBeli.hargaBeli * parseInt(itemBeli.jumlahBeli);
       }
     }
-    setPembelian((values) => ({ ...values, item: daftarBarang, total: sum }));
-  }, [daftarBarang]);
+    setPembelian((values) => ({ ...values, item: daftarItemBeli, total: sum }));
+  }, [daftarItemBeli]);
 
   useEffect(() => {
     setPembelian((values) => ({ ...values, pemasok }));
@@ -116,6 +116,7 @@ const PembelianAddPage = () => {
                     <Form.Control
                       name="faktur"
                       type="text"
+                      isInvalid={!pembelian.faktur}
                       value={pembelian.faktur}
                       onChange={handleInput}
                     />
@@ -125,6 +126,8 @@ const PembelianAddPage = () => {
                     <Form.Control
                       name="tanggal"
                       type="date"
+                      isInvalid={!pembelian.tanggal}
+                      isValid={pembelian.tanggal}
                       value={pembelian.tanggal}
                       onChange={handleInput}
                     />
@@ -144,7 +147,7 @@ const PembelianAddPage = () => {
                 Daftar Item{" "}
                 <BarangMultipleChoiceWidget
                   isSingleAction={true}
-                  listBarang={daftarBarang}
+                  listBarang={daftarItemBeli}
                   callbackBarangMultipleChoiceWidget={
                     callbackBarangMultipleChoiceWidget
                   }
@@ -164,24 +167,28 @@ const PembelianAddPage = () => {
                 </tr>
               </thead>
               <tbody>
-                {daftarBarang.map((barang, index) => (
+                {daftarItemBeli.map((itemBeli, index) => (
                   <tr key={index}>
-                    <td>{barang.kodeBarang}</td>
-                    <td>{barang.namaBarang}</td>
-                    <td>{barang.hargaBeli}</td>
-                    <td>{barang.hargaJual}</td>
+                    <td>{itemBeli.kodeBarang}</td>
+                    <td>{itemBeli.namaBarang}</td>
+                    <td>{itemBeli.hargaBeli}</td>
+                    <td>{itemBeli.hargaJual}</td>
                     <td>
                       <Form.Control
                         type="number"
-                        name="jumlahBarang"
-                        value={barang.jumlahBarang}
-                        onChange={(e) => handleInputDaftarBarang(e, index)}
+                        name="jumlahBeli"
+                        isInvalid={
+                          itemBeli.jumlahBeli >= itemBeli.jumlahBarang ||
+                          !itemBeli.jumlahBeli
+                        }
+                        value={itemBeli.jumlahBeli}
+                        onChange={(e) => handleInputDaftarItemBeli(e, index)}
                       />
                     </td>
                     <td>
                       <Button
                         variant="outline-danger"
-                        onClick={(e) => handleRemoveItem(barang)}>
+                        onClick={(e) => handleRemoveItem(itemBeli)}>
                         <FaTrash />
                       </Button>
                     </td>

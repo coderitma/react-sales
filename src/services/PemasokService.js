@@ -9,7 +9,9 @@ const CONFIG = {
   },
 };
 
-const list = () => {
+const list = (query) => {
+  CONFIG.params = { ...query };
+  console.log(CONFIG);
   return HTTPService.get(ENDPOINT, CONFIG);
 };
 

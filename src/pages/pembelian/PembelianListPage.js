@@ -11,7 +11,9 @@ const PembelianListPage = () => {
 
   useEffect(() => {
     PembelianService.list()
-      .then((response) => setDaftarPembelian(response.data))
+      .then((response) => {
+        setDaftarPembelian(response.data);
+      })
       .catch((error) => alert(error));
   }, []);
 

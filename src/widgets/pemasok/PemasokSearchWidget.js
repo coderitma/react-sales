@@ -14,18 +14,19 @@ const PemasokSearchWidget = ({ attr, callbackPemasokSearchWidget }) => {
   };
 
   const handleSearch = () => {
-    PemasokService.list(query)
-      .then((response) => {
-        if (callbackPemasokSearchWidget) {
-          if (response.data.length > 0) {
-            callbackPemasokSearchWidget(response.data);
-            setShow(false);
-          } else {
-            alert("pencarian tidak ditemukan");
-          }
-        }
-      })
-      .catch((error) => alert(error));
+    callbackPemasokSearchWidget(query);
+    // PemasokService.list(query)
+    //   .then((response) => {
+    //     if (callbackPemasokSearchWidget) {
+    //       if (response.data.length > 0) {
+    //         callbackPemasokSearchWidget(response.data);
+    //         setShow(false);
+    //       } else {
+    //         alert("pencarian tidak ditemukan");
+    //       }
+    //     }
+    //   })
+    //   .catch((error) => alert(error));
   };
 
   const handleClear = () => {
