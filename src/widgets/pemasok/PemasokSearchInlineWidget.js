@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, Col, Form, InputGroup, Modal, Row } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
+
 const PemasokSearchInlineWidget = ({
   attr,
   isShowKodePemasok,
@@ -24,7 +25,6 @@ const PemasokSearchInlineWidget = ({
   };
 
   const handleSearch = () => {
-    console.log(query, "uhuy");
     callbackPemasokSearchInlineWidget(query);
   };
 

@@ -44,13 +44,10 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
                 <FaTable />
                 &nbsp;&nbsp;&nbsp;Master
               </Nav.Link>
-              <Nav.Link eventKey="/barang">Barang</Nav.Link>
-              <Nav.Link
-                eventKey="/pemasok"
-                defaultActiveKey="/pemasok"
-                onClick={() => navigate("/pemasok")}>
-                Pemasok
+              <Nav.Link onClick={() => navigate("/barang")} eventKey="/barang">
+                Barang
               </Nav.Link>
+              <Nav.Link onClick={() => navigate("/pemasok")}>Pemasok</Nav.Link>
               <Nav.Link eventKey="disabled" disabled>
                 <FaChartArea />
                 &nbsp;&nbsp;&nbsp;Transaksi

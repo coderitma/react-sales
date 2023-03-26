@@ -3,97 +3,105 @@ import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import BarangService from "../../services/BarangService";
+import BarangSearchInlineWidget from "../../widgets/barang/BarangSearchInlineWidget";
 import BarangSearchWidget from "../../widgets/barang/BarangSearchWidget";
+import NavigationWidget from "../../widgets/commons/NavigationWidget";
+import Paginator from "../../widgets/commons/Paginator";
 
 const BarangListPage = () => {
   const navigate = useNavigate();
   const [daftarBarang, setDaftarBarang] = useState([]);
-  const [init, setInit] = useState(false);
+  const [paginateBarang, setPaginateBarang] = useState({});
+  const [queryBarang, setQueryBarang] = useState({ page: 1, limit: 2 });
 
-  useEffect(() => {
-    console.log("render....");
-
-    BarangService.list()
+  const handleBarangServiceList = () => {
+    BarangService.list(queryBarang)
       .then((response) => {
         setDaftarBarang(response.data);
-        setInit(true);
+        setPaginateBarang(JSON.parse(response.headers.pagination));
       })
       .catch((error) => alert(error));
-    return;
-  }, []);
-
-  const callbackBarangSearchWidget = (data) => {
-    setDaftarBarang(data);
   };
 
-  if (!init) return "ups";
+  useEffect(() => {
+    handleBarangServiceList();
+  }, [queryBarang]);
+
+  const callbackBarangSearchInlineWidget = (query) => {
+    setQueryBarang((values) => ({ ...values, ...query }));
+  };
+
+  const callbackPaginator = (page) => {
+    setQueryBarang((values) => ({ ...values, page }));
+  };
 
   return (
-    <Container>
-      {console.log("render template")}
-      <Row>
-        <Col
-          md={12}
-          className="d-flex justify-content-between align-items-center">
-          <h4>Daftar Barang</h4>
-          <div>
-            <BarangSearchWidget
-              attr={{ className: "me-2", variant: "outline-primary" }}
-              callbackBarangSearchWidget={callbackBarangSearchWidget}
+    <>
+      <NavigationWidget
+        actionTop={
+          <BarangSearchInlineWidget
+            attr={{ variant: "secondary" }}
+            isShowKodeBarang={true}
+            isShowNamaBarang={true}
+            callbackBarangSearchInlineWidget={callbackBarangSearchInlineWidget}
+          />
+        }
+        buttonCreate={
+          <Button className="w-100" onClick={() => navigate("/barang/add")}>
+            <FaPlusCircle /> Tambah
+          </Button>
+        }>
+        <Card>
+          <Card.Header className="d-flex justify-content-between align-item-baseline">
+            <h5>Daftar Barang</h5>
+            <Paginator
+              paginate={paginateBarang}
+              callbackPaginator={callbackPaginator}
             />
-            <Button onClick={() => navigate("/barang/add")}>
-              <FaPlusCircle /> Tambah
-            </Button>
-          </div>
-        </Col>
-      </Row>
-      <Row className="mt-3">
-        <Col md={12}>
-          <Card>
-            <Table striped borderless>
-              <thead>
-                <tr>
-                  <th>Kode Barang</th>
-                  <th>Nama Barang</th>
-                  <th>Harga Beli</th>
-                  <th>Harga Jual</th>
-                  <th>Jumlah Barang</th>
-                  <th>Aksi</th>
-                </tr>
-              </thead>
-              {daftarBarang.length > 0 ? (
-                <tbody>
-                  {daftarBarang.map((barang, index) => (
-                    <tr key={index}>
-                      <td>{barang.kodeBarang}</td>
-                      <td>{barang.namaBarang}</td>
-                      <td>{barang.hargaBeli}</td>
-                      <td>{barang.hargaJual}</td>
-                      <td>{barang.jumlahBarang}</td>
-                      <td>
-                        <Button
-                          onClick={() =>
-                            navigate(`/barang/edit/${barang.kodeBarang}`)
-                          }>
-                          <FaEdit /> Detail
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              ) : (
-                // barang masih belum terisi
-                <tbody>
-                  <tr>
-                    <td colSpan={6}>Sedang memuat...</td>
+          </Card.Header>
+          <Table striped borderless>
+            <thead>
+              <tr>
+                <th>Kode Barang</th>
+                <th>Nama Barang</th>
+                <th>Harga Beli</th>
+                <th>Harga Jual</th>
+                <th>Jumlah Barang</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            {daftarBarang.length > 0 ? (
+              <tbody>
+                {daftarBarang.map((barang, index) => (
+                  <tr key={index}>
+                    <td>{barang.kodeBarang}</td>
+                    <td>{barang.namaBarang}</td>
+                    <td>{barang.hargaBeli}</td>
+                    <td>{barang.hargaJual}</td>
+                    <td>{barang.jumlahBarang}</td>
+                    <td>
+                      <Button
+                        onClick={() =>
+                          navigate(`/barang/edit/${barang.kodeBarang}`)
+                        }>
+                        <FaEdit />
+                      </Button>
+                    </td>
                   </tr>
-                </tbody>
-              )}
-            </Table>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                ))}
+              </tbody>
+            ) : (
+              // barang masih belum terisi
+              <tbody>
+                <tr>
+                  <td colSpan={6}>Sedang memuat...</td>
+                </tr>
+              </tbody>
+            )}
+          </Table>
+        </Card>
+      </NavigationWidget>
+    </>
   );
 };
 
