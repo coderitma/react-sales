@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Form, Button } from "react-bootstrap";
+import { FaArrowLeft, FaSave, FaTrash } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import PemasokService from "../../services/PemasokService";
+import NavigationWidget from "../../widgets/commons/NavigationWidget";
 
 const PemasokEditPage = () => {
   const navigate = useNavigate();
@@ -46,66 +48,77 @@ const PemasokEditPage = () => {
   }, []);
 
   return (
-    <Container>
-      <Row className="d-flex justify-content-center align-items-center my-4">
-        <Col md={6}>
-          <Card>
-            <Card.Body>
-              <Card.Title>Edit Pemasok</Card.Title>
-              <Form.Group className="mt-2">
-                <Form.Label>Kode Pemasok</Form.Label>
-                <Form.Control
-                  name="kodePemasok"
-                  type="text"
-                  value={pemasok.kodePemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label>Nama Pemasok</Form.Label>
-                <Form.Control
-                  name="namaPemasok"
-                  type="text"
-                  value={pemasok.namaPemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2">
-                <Form.Label>Alamat Pemasok</Form.Label>
-                <Form.Control
-                  name="alamatPemasok"
-                  type="text"
-                  value={pemasok.alamatPemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <Form.Group className="mt-2 mb-4">
-                <Form.Label>Telepon Pemasok</Form.Label>
-                <Form.Control
-                  name="teleponPemasok"
-                  type="text"
-                  value={pemasok.teleponPemasok || ""}
-                  onChange={handleInput}
-                />
-              </Form.Group>
-              <div className="d-flex justify-content-between">
-                <Button variant="danger" onClick={handlePemasokServiceRemove}>
-                  Hapus
-                </Button>
-                <div>
-                  <Button onClick={() => navigate(-1)} variant="secondary">
-                    Batal
-                  </Button>
-                  <Button className="ms-2" onClick={handlePemasokServiceEdit}>
-                    Simpan Perubahan
-                  </Button>
-                </div>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <NavigationWidget
+        actionTop={
+          <>
+            <Button
+              className="ms-2"
+              onClick={() => navigate(-1)}
+              variant="secondary">
+              <FaArrowLeft /> Kembali
+            </Button>
+            <Button
+              className="ms-2"
+              variant="danger"
+              onClick={handlePemasokServiceRemove}>
+              <FaTrash /> Hapus
+            </Button>
+            <Button className="ms-2" onClick={handlePemasokServiceEdit}>
+              <FaSave /> Simpan Perubahan
+            </Button>
+          </>
+        }>
+        <Card>
+          <Card.Header>
+            <h5>Edit Pemasok</h5>
+          </Card.Header>
+          <Card.Body>
+            <Form.Group className="mt-2">
+              <Form.Label>Kode Pemasok</Form.Label>
+              <Form.Control
+                name="kodePemasok"
+                type="text"
+                value={pemasok.kodePemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label>Nama Pemasok</Form.Label>
+              <Form.Control
+                name="namaPemasok"
+                type="text"
+                value={pemasok.namaPemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2">
+              <Form.Label>Alamat Pemasok</Form.Label>
+              <Form.Control
+                name="alamatPemasok"
+                type="text"
+                value={pemasok.alamatPemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+            <Form.Group className="mt-2 mb-4">
+              <Form.Label>Telepon Pemasok</Form.Label>
+              <Form.Control
+                name="teleponPemasok"
+                type="text"
+                value={pemasok.teleponPemasok || ""}
+                onChange={handleInput}
+              />
+            </Form.Group>
+          </Card.Body>
+        </Card>
+      </NavigationWidget>
+      <Container>
+        <Row className="d-flex justify-content-center align-items-center my-4">
+          <Col md={6}></Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 
