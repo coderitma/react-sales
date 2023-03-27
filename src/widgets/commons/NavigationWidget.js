@@ -25,7 +25,7 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
         <Container>
           <Navbar.Brand href="#">
             <BiBarChartSquare className="text-primary" size={"1.5em"} />
-            &nbsp;Coderitma SSP
+            &nbsp;MERN 15 SSP
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
@@ -52,7 +52,9 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
                 <FaChartArea />
                 &nbsp;&nbsp;&nbsp;Transaksi
               </Nav.Link>
-              <Nav.Link eventKey="link-1">Pembelian</Nav.Link>
+              <Nav.Link onClick={() => navigate("/pembelian")}>
+                Pembelian
+              </Nav.Link>
               <Nav.Link eventKey="link-2">Penjualan</Nav.Link>
               <Nav.Link eventKey="disabled" disabled>
                 <FaChartBar />
