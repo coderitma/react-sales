@@ -1,22 +1,31 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import BarangService from "../../services/BarangService";
+import { AlertContext } from "../../utils/context";
 import BarangSearchInlineWidget from "../../widgets/barang/BarangSearchInlineWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
-import WaitingSpinner from "../../widgets/commons/WaitingSpinner";
 
 const BarangListPage = () => {
+  const { setShowAlert, setShowAlertMessage } = useContext(AlertContext);
   const navigate = useNavigate();
   const [daftarBarang, setDaftarBarang] = useState([]);
   const [paginateBarang, setPaginateBarang] = useState({});
-  const [queryBarang, setQueryBarang] = useState({ page: 1, limit: 2 });
+  const [queryBarang, setQueryBarang] = useState({ page: 1, limit: 1 });
+  const [loaded, setLoaded] = useState(false);
 
   const handleBarangServiceList = () => {
     BarangService.list(queryBarang)
       .then((response) => {
+        if (response.data.length === 0 && loaded) {
+          setShowAlert(true);
+          setShowAlertMessage({
+            header: "Data kosong",
+            message: "Data barang kosong.",
+          });
+        }
         setDaftarBarang(response.data);
         setPaginateBarang(JSON.parse(response.headers.pagination));
       })
@@ -24,6 +33,9 @@ const BarangListPage = () => {
   };
 
   useEffect(() => {
+    if (!loaded) {
+      setLoaded(true);
+    }
     handleBarangServiceList();
   }, [queryBarang]);
 
@@ -35,11 +47,8 @@ const BarangListPage = () => {
     setQueryBarang((values) => ({ ...values, page }));
   };
 
-  if (daftarBarang.length <= 0) return <WaitingSpinner />;
-
   return (
     <>
-      {console.log("kepanggil")}
       <NavigationWidget
         actionTop={
           <BarangSearchInlineWidget
@@ -73,7 +82,7 @@ const BarangListPage = () => {
                 <th>Aksi</th>
               </tr>
             </thead>
-            {daftarBarang.length > 0 ? (
+            {daftarBarang.length > 0 && (
               <tbody>
                 {daftarBarang.map((barang, index) => (
                   <tr key={index}>
@@ -92,13 +101,6 @@ const BarangListPage = () => {
                     </td>
                   </tr>
                 ))}
-              </tbody>
-            ) : (
-              // barang masih belum terisi
-              <tbody>
-                <tr>
-                  <td colSpan={6}>Sedang memuat...</td>
-                </tr>
               </tbody>
             )}
           </Table>

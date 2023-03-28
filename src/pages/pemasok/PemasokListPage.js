@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PemasokService from "../../services/PemasokService";
+import { AlertContext, ModalContext } from "../../utils/context";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
 import PemasokSearchInlineWidget from "../../widgets/pemasok/PemasokSearchInlineWidget";
 
 const PemasokListPage = () => {
+  const { setShowAlert, setShowAlertMessage } = useContext(AlertContext);
   const navigate = useNavigate();
   const [daftarPemasok, setDaftarPemasok] = useState([]);
   const [paginatePemasok, setPaginatePemasok] = useState({});
@@ -16,10 +18,24 @@ const PemasokListPage = () => {
   const handlePemasokServiceList = () => {
     PemasokService.list(queryPemasok)
       .then((response) => {
-        setDaftarPemasok(response.data);
+        if (response.data.length === 0) {
+          setShowAlert(true);
+          setShowAlertMessage({
+            header: "Data kosong",
+            message: "Data pemasok kosong.",
+          });
+        } else {
+          setDaftarPemasok(response.data);
+        }
         setPaginatePemasok(JSON.parse(response.headers.pagination));
       })
-      .catch((error) => alert(error));
+      .catch((error) => {
+        setShowAlert(true);
+        setShowAlertMessage({
+          header: "Ups!",
+          message: error.message,
+        });
+      });
   };
 
   const callbackPaginator = (page) => {
@@ -28,7 +44,6 @@ const PemasokListPage = () => {
 
   useEffect(() => {
     handlePemasokServiceList();
-    console.log(queryPemasok);
   }, [queryPemasok]);
 
   const callbackPemasokSearchInlineWidget = (query) => {
@@ -72,14 +87,6 @@ const PemasokListPage = () => {
                 <th>Aksi</th>
               </tr>
             </thead>
-
-            {daftarPemasok.length <= 0 && (
-              <tbody>
-                <tr>
-                  <td colSpan={5}>Data pemasok kosong</td>
-                </tr>
-              </tbody>
-            )}
 
             {daftarPemasok.length > 0 && (
               <tbody>
