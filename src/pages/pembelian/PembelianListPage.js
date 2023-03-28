@@ -91,7 +91,7 @@ const PembelianListPage = () => {
                       <Button>
                         <FaEdit />
                       </Button>
-                      <PembelianReviewWidget faktur={faktur} />
+                      <PembelianReviewWidget faktur={pembelian.faktur} />
                     </td>
                   </tr>
                 ))}
