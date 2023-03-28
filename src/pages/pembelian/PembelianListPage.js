@@ -88,11 +88,7 @@ const PembelianListPage = () => {
                     <td>{pembelian.kodePemasok}</td>
                     <td>{pembelian.total}</td>
                     <td>
-                      <Button>
-                        <FaEdit />
-                      </Button>
                       <PembelianReviewWidget faktur={pembelian.faktur} />
-                      {/* <PembelianReviewWidget faktur={pembelian.faktur} /> */}
                     </td>
                   </tr>
                 ))}
