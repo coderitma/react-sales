@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
+import PembelianReviewWidget from "../../widgets/pembelian/PembelianReviewWidget";
 import PembelianSearchInlineWidget from "../../widgets/pembelian/PembelianSearchInlineWidget";
 
 const PembelianListPage = () => {
@@ -90,6 +91,7 @@ const PembelianListPage = () => {
                       <Button>
                         <FaEdit />
                       </Button>
+                      <PembelianReviewWidget faktur={faktur} />
                     </td>
                   </tr>
                 ))}
