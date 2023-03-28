@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
+import { Button, Card, Table } from "react-bootstrap";
+import { FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
