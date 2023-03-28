@@ -23,4 +23,9 @@ const get = (faktur) => {
   return HTTPService.get(`${ENDPOINT}/${faktur}`, CONFIG);
 };
 
-export default { list, create, get };
+const reporting = (query) => {
+  CONFIG.params = query;
+  return HTTPService.get(`${ENDPOINT}/reporting`, CONFIG);
+};
+
+export default { list, create, get, reporting };

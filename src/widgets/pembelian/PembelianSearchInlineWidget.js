@@ -6,12 +6,15 @@ const PembelianSearchInlineWidget = ({
   attr,
   isShowFaktur,
   isShowKodePemasok,
+  isShowReporting,
   callbackPembelianSearchInlineWidget,
   children,
 }) => {
   const [query, setQuery] = useState({
     faktur: "",
     kodePemasok: "",
+    fromTanggal: "",
+    toTanggal: "",
   });
 
   const handleInput = (e) => {
@@ -46,6 +49,25 @@ const PembelianSearchInlineWidget = ({
             value={query.kodePemasok || ""}
             onChange={handleInput}
           />
+        )}
+
+        {isShowReporting && (
+          <>
+            <Form.Control
+              name="fromTanggal"
+              type="date"
+              placeholder="Dari tanggal"
+              value={query.fromTanggal || ""}
+              onChange={handleInput}
+            />
+            <Form.Control
+              name="toTanggal"
+              type="date"
+              placeholder="Sampai tanggal"
+              value={query.toTanggal || ""}
+              onChange={handleInput}
+            />
+          </>
         )}
 
         <Button {...attr} onClick={handleSearch}>

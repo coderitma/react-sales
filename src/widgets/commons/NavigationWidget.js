@@ -55,14 +55,13 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
               <Nav.Link onClick={() => navigate("/pembelian")}>
                 Pembelian
               </Nav.Link>
-              <Nav.Link eventKey="link-2">Penjualan</Nav.Link>
               <Nav.Link eventKey="disabled" disabled>
                 <FaChartBar />
                 &nbsp;&nbsp;&nbsp;Laporan
               </Nav.Link>
-              <Nav.Link href="/home">Laporan Master</Nav.Link>
-              <Nav.Link href="/home">Laporan Pembelian</Nav.Link>
-              <Nav.Link href="/home">Laporan Penjualan</Nav.Link>
+              <Nav.Link onClick={() => navigate("/pembelian/reporting")}>
+                Laporan Pembelian
+              </Nav.Link>
             </Nav>
           </Col>
           <Col md={10}>{children}</Col>
