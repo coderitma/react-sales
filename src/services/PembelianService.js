@@ -19,6 +19,7 @@ const create = (pembelian) => {
 };
 
 const get = (faktur) => {
+  CONFIG.params = {};
   return HTTPService.get(`${ENDPOINT}/${faktur}`, CONFIG);
 };
 

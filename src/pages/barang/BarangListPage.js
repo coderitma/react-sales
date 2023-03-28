@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row, Table } from "react-bootstrap";
-import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { Button, Card, Table } from "react-bootstrap";
+import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import BarangService from "../../services/BarangService";
 import BarangSearchInlineWidget from "../../widgets/barang/BarangSearchInlineWidget";
-import BarangSearchWidget from "../../widgets/barang/BarangSearchWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
+import WaitingSpinner from "../../widgets/commons/WaitingSpinner";
 
 const BarangListPage = () => {
   const navigate = useNavigate();
@@ -35,8 +35,11 @@ const BarangListPage = () => {
     setQueryBarang((values) => ({ ...values, page }));
   };
 
+  if (daftarBarang.length <= 0) return <WaitingSpinner />;
+
   return (
     <>
+      {console.log("kepanggil")}
       <NavigationWidget
         actionTop={
           <BarangSearchInlineWidget
