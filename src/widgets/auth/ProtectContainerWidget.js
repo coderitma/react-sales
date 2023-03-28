@@ -1,18 +1,15 @@
-import { createContext, useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Toast, ToastContainer } from "react-bootstrap";
+import { FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
-import { AlertContext, ModalContext } from "../../utils/context";
-// import { ModalContext } from "../../utils/context";
-import NavigationWidget from "../commons/NavigationWidget";
+import { ToastContext } from "../../utils/context";
 
 const ProtectContainerWidget = ({ children }) => {
   const navigate = useNavigate();
-  const [showAlert, setShowAlert] = useState(false);
-  const [showAlertMessage, setShowAlertMessage] = useState({
-    header: "",
-    message: "",
-  });
+  const [toastContextVariant, setToastContextVariant] = useState("light");
+  const [toastContextShow, setToastContextShow] = useState(false);
+  const [toastContextMessage, setToastContextMessage] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -21,33 +18,32 @@ const ProtectContainerWidget = ({ children }) => {
         navigate("/");
       }
     })();
-  });
+  }, []);
 
   return (
     <>
-      <Modal show={showAlert} onHide={() => setShowAlert(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>{showAlertMessage.header}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{showAlertMessage.message}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowAlert(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={() => setShowAlert(false)}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <AlertContext.Provider
+      <ToastContainer className="mt-2 me-2" position="top-center">
+        <Toast
+          bg={toastContextVariant}
+          delay={1500}
+          autohide
+          show={toastContextShow}
+          onClose={() => setToastContextShow(false)}>
+          <Toast.Header>
+            <FaInfoCircle /> &nbsp;
+            <strong className="me-auto">Hi, just for info!</strong>
+          </Toast.Header>
+          <Toast.Body>{toastContextMessage}</Toast.Body>
+        </Toast>
+      </ToastContainer>
+      <ToastContext.Provider
         value={{
-          showAlert,
-          setShowAlert,
-          showAlertMessage,
-          setShowAlertMessage,
+          setToastContextShow,
+          setToastContextMessage,
+          setToastContextVariant,
         }}>
         <div>{children}</div>
-      </AlertContext.Provider>
+      </ToastContext.Provider>
     </>
   );
 };

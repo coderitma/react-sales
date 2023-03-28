@@ -3,13 +3,17 @@ import { Button, Card, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import BarangService from "../../services/BarangService";
-import { AlertContext } from "../../utils/context";
+import { ToastContext } from "../../utils/context";
 import BarangSearchInlineWidget from "../../widgets/barang/BarangSearchInlineWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
 
 const BarangListPage = () => {
-  const { setShowAlert, setShowAlertMessage } = useContext(AlertContext);
+  const {
+    setToastContextVariant,
+    setToastContextShow,
+    setToastContextMessage,
+  } = useContext(ToastContext);
   const navigate = useNavigate();
   const [daftarBarang, setDaftarBarang] = useState([]);
   const [paginateBarang, setPaginateBarang] = useState({});
@@ -20,16 +24,18 @@ const BarangListPage = () => {
     BarangService.list(queryBarang)
       .then((response) => {
         if (response.data.length === 0 && loaded) {
-          setShowAlert(true);
-          setShowAlertMessage({
-            header: "Data kosong",
-            message: "Data barang kosong.",
-          });
+          setToastContextMessage("Data barang kosong");
+          setToastContextVariant("light");
+          setToastContextShow(true);
         }
         setDaftarBarang(response.data);
         setPaginateBarang(JSON.parse(response.headers.pagination));
       })
-      .catch((error) => alert(error));
+      .catch((error) => {
+        setToastContextMessage(`Error: ${error}`);
+        setToastContextVariant("warning");
+        setToastContextShow(true);
+      });
   };
 
   useEffect(() => {

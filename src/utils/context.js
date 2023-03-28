@@ -1,6 +1,5 @@
 import { createContext } from "react";
 
-const ModalContext = createContext();
-const AlertContext = createContext();
+const ToastContext = createContext();
 
-export { ModalContext, AlertContext };
+export { ToastContext };
