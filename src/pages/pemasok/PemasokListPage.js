@@ -18,7 +18,7 @@ const PemasokListPage = () => {
   const navigate = useNavigate();
   const [daftarPemasok, setDaftarPemasok] = useState([]);
   const [paginatePemasok, setPaginatePemasok] = useState({});
-  const [queryPemasok, setQueryPemasok] = useState({ page: 1 });
+  const [queryPemasok, setQueryPemasok] = useState({ page: 1, limit: 10 });
 
   const handlePemasokServiceList = () => {
     PemasokService.list(queryPemasok)

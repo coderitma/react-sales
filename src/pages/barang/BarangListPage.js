@@ -4,6 +4,7 @@ import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import BarangService from "../../services/BarangService";
 import { ToastContext } from "../../utils/context";
+import { helperReadableCurrency } from "../../utils/helpers";
 import BarangSearchInlineWidget from "../../widgets/barang/BarangSearchInlineWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
@@ -17,7 +18,7 @@ const BarangListPage = () => {
   const navigate = useNavigate();
   const [daftarBarang, setDaftarBarang] = useState([]);
   const [paginateBarang, setPaginateBarang] = useState({});
-  const [queryBarang, setQueryBarang] = useState({ page: 1, limit: 1 });
+  const [queryBarang, setQueryBarang] = useState({ page: 1, limit: 10 });
   const [loaded, setLoaded] = useState(false);
 
   const handleBarangServiceList = () => {
@@ -94,8 +95,8 @@ const BarangListPage = () => {
                   <tr key={index}>
                     <td>{barang.kodeBarang}</td>
                     <td>{barang.namaBarang}</td>
-                    <td>{barang.hargaBeli}</td>
-                    <td>{barang.hargaJual}</td>
+                    <td>{helperReadableCurrency(barang.hargaBeli)}</td>
+                    <td>{helperReadableCurrency(barang.hargaJual)}</td>
                     <td>{barang.jumlahBarang}</td>
                     <td>
                       <Button

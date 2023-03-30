@@ -14,22 +14,15 @@ const PembelianReportingPage = () => {
   );
   const [queryPembelianReporting, setQueryPembelianReporting] = useState({
     page: 1,
-    limit: 1,
+    limit: 10,
   });
 
   const handlePembelianServiceReporting = () => {
     PembelianService.reporting(queryPembelianReporting)
       .then((response) => {
-        if (response.data.item.length === 0) {
-          setPaginatePembelianReporting({});
-          alert("Pencarian tidak ditemukan");
-        } else {
-          setPembelianReporting(response.data.item);
-          setPembelianGrandTotal(response.data.grandTotal);
-          setPaginatePembelianReporting(
-            JSON.parse(response.headers.pagination)
-          );
-        }
+        setPembelianReporting(response.data.item);
+        setPembelianGrandTotal(response.data.grandTotal);
+        setPaginatePembelianReporting(JSON.parse(response.headers.pagination));
       })
       .catch((error) => console.log(error));
   };

@@ -3,7 +3,7 @@ import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { FaArrowLeft, FaSave, FaSearch, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
-import helpers from "../../utils/helpers";
+import { itemIsDuplicatedInArrayObject } from "../../utils/helpers";
 import BarangChoiceWidget from "../../widgets/barang/BarangChoiceWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import PemasokChoiceWidget from "../../widgets/pemasok/PemasokChoiceWidget";
@@ -50,7 +50,12 @@ const PembelianAddPage = () => {
   const handlePembelianServiceCreate = () => {
     PembelianService.create(pembelian)
       .then((response) => {
-        alert("Berhasil menambahkan transaksi");
+        const printFaktur = window.confirm(
+          "Berhasil menambahkan transaksi, cetak faktur?"
+        );
+        if (printFaktur) {
+          window.open(`/pembelian/${pembelian.faktur}/print`);
+        }
         navigate("/pembelian");
       })
       .catch((error) => {
@@ -59,9 +64,7 @@ const PembelianAddPage = () => {
   };
 
   const callbackBarangMultipleChoiceWidget = (data) => {
-    if (
-      !helpers.itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)
-    ) {
+    if (!itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)) {
       setDaftarItemBeli((values) => {
         const result = [...values];
         data.jumlahBeli = 1;
@@ -78,9 +81,7 @@ const PembelianAddPage = () => {
   };
 
   const callbackBarangChoiceWidget = (data) => {
-    if (
-      !helpers.itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)
-    ) {
+    if (!itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)) {
       setDaftarItemBeli((values) => {
         const result = [...values];
         data.jumlahBeli = 1;

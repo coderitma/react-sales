@@ -3,6 +3,10 @@ import { Button, Card, Table } from "react-bootstrap";
 import { FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
+import {
+  helperReadableCurrency,
+  helperReadableDate,
+} from "../../utils/helpers";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
 import PembelianReviewWidget from "../../widgets/pembelian/PembelianReviewWidget";
@@ -12,7 +16,7 @@ const PembelianListPage = () => {
   const navigate = useNavigate();
   const [daftarPembelian, setDaftarPembelian] = useState([]);
   const [paginatePembelian, setPaginatePembelian] = useState({});
-  const [queryPembelian, setQueryPembelian] = useState({ page: 1, limit: 2 });
+  const [queryPembelian, setQueryPembelian] = useState({ page: 1, limit: 10 });
 
   const handlePembelianServiceList = () => {
     PembelianService.list(queryPembelian)
@@ -84,9 +88,9 @@ const PembelianListPage = () => {
                 {daftarPembelian.map((pembelian, index) => (
                   <tr key={index}>
                     <td>{pembelian.faktur}</td>
-                    <td>{pembelian.tanggal}</td>
+                    <td>{helperReadableDate(pembelian.tanggal)}</td>
                     <td>{pembelian.kodePemasok}</td>
-                    <td>{pembelian.total}</td>
+                    <td>{helperReadableCurrency(pembelian.total)}</td>
                     <td>
                       <PembelianReviewWidget faktur={pembelian.faktur} />
                     </td>

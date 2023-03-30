@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { FaSearchPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
 
 const PembelianReviewWidget = ({ attr, faktur }) => {
@@ -81,6 +82,14 @@ const PembelianReviewWidget = ({ attr, faktur }) => {
               </tbody>
             </Table>
           )}
+          <Modal.Footer>
+            <Link
+              className="btn btn-primary"
+              target="_blank"
+              to={`/pembelian/${pembelian.faktur}/print`}>
+              Print
+            </Link>
+          </Modal.Footer>
         </Modal>
       )}
     </>
