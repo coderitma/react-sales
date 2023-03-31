@@ -3,7 +3,6 @@ import { Card, Table } from "react-bootstrap";
 import PembelianService from "../../services/PembelianService";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
-import WaitingSpinner from "../../widgets/commons/WaitingSpinner";
 import PembelianSearchInlineWidget from "../../widgets/pembelian/PembelianSearchInlineWidget";
 
 const PembelianReportingPage = () => {
@@ -17,22 +16,20 @@ const PembelianReportingPage = () => {
     limit: 10,
   });
 
-  const handlePembelianServiceReporting = () => {
-    PembelianService.reporting(queryPembelianReporting)
-      .then((response) => {
-        setPembelianReporting(response.data.item);
-        setPembelianGrandTotal(response.data.grandTotal);
-        setPaginatePembelianReporting(JSON.parse(response.headers.pagination));
-      })
-      .catch((error) => console.log(error));
-  };
-
   useEffect(() => {
     if (
       queryPembelianReporting.fromTanggal &&
       queryPembelianReporting.toTanggal
     ) {
-      handlePembelianServiceReporting();
+      PembelianService.reporting(queryPembelianReporting)
+        .then((response) => {
+          setPembelianReporting(response.data.item);
+          setPembelianGrandTotal(response.data.grandTotal);
+          setPaginatePembelianReporting(
+            JSON.parse(response.headers.pagination)
+          );
+        })
+        .catch((error) => console.log(error));
     }
   }, [queryPembelianReporting]);
 
