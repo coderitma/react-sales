@@ -29,7 +29,9 @@ const PemasokListPage = () => {
           setToastContextShow(true);
         }
         setDaftarPemasok(response.data);
-        setPaginatePemasok(JSON.parse(response.headers.pagination));
+        if (response.headers.pagination) {
+          setPaginatePemasok(JSON.parse(response.headers.pagination));
+        }
       })
       .catch((error) => {
         setToastContextMessage(`Error: ${error}`);

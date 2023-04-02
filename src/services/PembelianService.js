@@ -25,7 +25,7 @@ const get = (faktur) => {
 
 const reporting = (query) => {
   CONFIG.params = query;
-  return HTTPService.get(`${ENDPOINT}/reporting`, CONFIG);
+  return HTTPService.get(`${config.BASE_URL}/reporting/pembelian`, CONFIG);
 };
 
 export default { list, create, get, reporting };

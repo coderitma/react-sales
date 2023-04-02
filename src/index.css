@@ -6,13 +6,12 @@ body {
   body {
     font-family: Arial, Helvetica, sans-serif !important;
     background-color: #fff !important;
+    
   }
   
   button, .btn {
     display: none !important;
   }
-
-
 }
 
 

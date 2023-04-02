@@ -11,15 +11,6 @@ const ProtectContainerWidget = ({ children }) => {
   const [toastContextShow, setToastContextShow] = useState(false);
   const [toastContextMessage, setToastContextMessage] = useState("");
 
-  useEffect(() => {
-    (async () => {
-      let isLoggedIn = await AuthService.tokenVerify();
-      if (!isLoggedIn) {
-        navigate("/");
-      }
-    })();
-  }, []);
-
   return (
     <>
       <ToastContainer className="mt-2 me-2" position="top-center">

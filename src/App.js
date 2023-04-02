@@ -13,6 +13,8 @@ import PembelianPrintPage from "./pages/pembelian/PembelianPrintPage";
 import PembelianReportingPage from "./pages/pembelian/PembelianReportingPage";
 import ProtectContainerWidget from "./widgets/auth/ProtectContainerWidget";
 import LayoutWidget from "./widgets/commons/LayoutWidget";
+import ReportingListPage from "./pages/reporting/ReportingListPage";
+import ReportingPembelianCreatePage from "./pages/reporting/ReportingPembelianCreatePage";
 
 function App() {
   return (
@@ -97,6 +99,22 @@ function App() {
             element={
               <ProtectContainerWidget>
                 <PembelianPrintPage />
+              </ProtectContainerWidget>
+            }
+          />
+          <Route
+            path="/reporting"
+            element={
+              <ProtectContainerWidget>
+                <ReportingListPage />
+              </ProtectContainerWidget>
+            }
+          />
+          <Route
+            path="/reporting/pembelian"
+            element={
+              <ProtectContainerWidget>
+                <ReportingPembelianCreatePage />
               </ProtectContainerWidget>
             }
           />

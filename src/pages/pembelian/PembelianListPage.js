@@ -22,7 +22,9 @@ const PembelianListPage = () => {
     PembelianService.list(queryPembelian)
       .then((response) => {
         setDaftarPembelian(response.data);
-        setPaginatePembelian(JSON.parse(response.headers.pagination));
+        if (response.headers.pagination) {
+          setPaginatePembelian(JSON.parse(response.headers.pagination));
+        }
       })
       .catch((error) => alert(error));
   };

@@ -1,23 +1,15 @@
 import React, { useState } from "react";
-import ListGroup from "react-bootstrap/ListGroup";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import { useNavigate } from "react-router-dom";
 import { BiBarChartSquare } from "react-icons/bi";
-import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaChartArea, FaChartBar, FaChartLine, FaTable } from "react-icons/fa";
+import { Col, Row } from "react-bootstrap";
+import { FaChartArea, FaChartBar, FaTable } from "react-icons/fa";
 
 const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
   const navigate = useNavigate();
-
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   return (
     <>
@@ -59,8 +51,8 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
                 <FaChartBar />
                 &nbsp;&nbsp;&nbsp;Laporan
               </Nav.Link>
-              <Nav.Link onClick={() => navigate("/pembelian/reporting")}>
-                Laporan Pembelian
+              <Nav.Link onClick={() => navigate("/reporting")}>
+                Laporan
               </Nav.Link>
             </Nav>
           </Col>

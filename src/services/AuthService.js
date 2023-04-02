@@ -17,7 +17,7 @@ const tokenVerify = async () => {
 
   try {
     if (token) {
-      const result = await HTTPService.post(
+      await HTTPService.post(
         `${config.BASE_URL}${ENDPOINT_CHECK_TOKEN}`,
         {},
         {
@@ -26,6 +26,7 @@ const tokenVerify = async () => {
           },
         }
       );
+
       return true;
     }
 

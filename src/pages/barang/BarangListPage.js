@@ -30,9 +30,12 @@ const BarangListPage = () => {
           setToastContextShow(true);
         }
         setDaftarBarang(response.data);
-        setPaginateBarang(JSON.parse(response.headers.pagination));
+        if (response.headers.pagination) {
+          setPaginateBarang(JSON.parse(response.headers.pagination));
+        }
       })
       .catch((error) => {
+        console.log(error);
         setToastContextMessage(`Error: ${error}`);
         setToastContextVariant("warning");
         setToastContextShow(true);
