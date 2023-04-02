@@ -45,6 +45,7 @@ const BarangEditPage = () => {
       .catch((error) => {
         alert(error);
       });
+    // eslint-disable-next-line
   }, []);
 
   return (

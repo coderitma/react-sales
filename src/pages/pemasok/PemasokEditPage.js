@@ -45,6 +45,7 @@ const PemasokEditPage = () => {
       .catch((error) => {
         alert(error);
       });
+    // eslint-disable-next-line
   }, []);
 
   return (

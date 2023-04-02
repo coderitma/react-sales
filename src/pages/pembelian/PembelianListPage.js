@@ -39,6 +39,7 @@ const PembelianListPage = () => {
 
   useEffect(() => {
     handlePembelianServiceList();
+    // eslint-disable-next-line
   }, [queryPembelian]);
 
   return (

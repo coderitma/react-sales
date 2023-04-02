@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
-import { FaEdit, FaPlusCircle, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PemasokService from "../../services/PemasokService";
 import { ToastContext } from "../../utils/context";
@@ -49,6 +49,7 @@ const PemasokListPage = () => {
       setLoaded(true);
     }
     handlePemasokServiceList();
+    // eslint-disable-next-line
   }, [queryPemasok]);
 
   const callbackPemasokSearchInlineWidget = (query) => {

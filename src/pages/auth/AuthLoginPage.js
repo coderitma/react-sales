@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/AuthService";
 
 const AuthLoginPage = () => {
-  const navigate = useNavigate();
   const [user, setUser] = useState({});
 
   const handleInput = (e) => {

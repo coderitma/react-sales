@@ -2,6 +2,7 @@ import config from "../config";
 import AuthService from "./AuthService";
 import HTTPService from "./HTTPService";
 
+const BarangService = {};
 const ENDPOINT = `${config.BASE_URL}/barang`;
 const CONFIG = {
   headers: {
@@ -9,20 +10,20 @@ const CONFIG = {
   },
 };
 
-const list = (query = {}) => {
+BarangService.list = (query = {}) => {
   CONFIG.params = query;
   return HTTPService.get(ENDPOINT, CONFIG);
 };
 
-const create = (barang) => {
+BarangService.create = (barang) => {
   return HTTPService.post(ENDPOINT, { ...barang }, CONFIG);
 };
 
-const get = (kodeBarang) => {
+BarangService.get = (kodeBarang) => {
   return HTTPService.get(`${ENDPOINT}/${kodeBarang}`, CONFIG);
 };
 
-const edit = (barang) => {
+BarangService.edit = (barang) => {
   const { kodeBarang, ...dataBarang } = barang;
   return HTTPService.put(
     `${ENDPOINT}/${kodeBarang}`,
@@ -31,8 +32,8 @@ const edit = (barang) => {
   );
 };
 
-const remove = (kodeBarang) => {
+BarangService.remove = (kodeBarang) => {
   return HTTPService.delete(`${ENDPOINT}/${kodeBarang}`, CONFIG);
 };
 
-export default { list, create, get, edit, remove };
+export default BarangService;

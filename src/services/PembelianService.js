@@ -2,6 +2,7 @@ import config from "../config";
 import AuthService from "./AuthService";
 import HTTPService from "./HTTPService";
 
+const PembelianService = {};
 const ENDPOINT = `${config.BASE_URL}/pembelian`;
 const CONFIG = {
   headers: {
@@ -9,23 +10,23 @@ const CONFIG = {
   },
 };
 
-const list = (query) => {
+PembelianService.list = (query) => {
   CONFIG.params = query;
   return HTTPService.get(ENDPOINT, CONFIG);
 };
 
-const create = (pembelian) => {
+PembelianService.create = (pembelian) => {
   return HTTPService.post(ENDPOINT, { ...pembelian }, CONFIG);
 };
 
-const get = (faktur) => {
+PembelianService.get = (faktur) => {
   CONFIG.params = {};
   return HTTPService.get(`${ENDPOINT}/${faktur}`, CONFIG);
 };
 
-const reporting = (query) => {
+PembelianService.reporting = (query) => {
   CONFIG.params = query;
   return HTTPService.get(`${config.BASE_URL}/reporting/pembelian`, CONFIG);
 };
 
-export default { list, create, get, reporting };
+export default PembelianService;

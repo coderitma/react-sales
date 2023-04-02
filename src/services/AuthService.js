@@ -1,19 +1,20 @@
 import config from "../config";
 import HTTPService from "./HTTPService";
 
+const AuthService = {};
 const ENDPOINT_LOGIN = "/users/login";
 const ENDPOINT_CHECK_TOKEN = "/hello/world";
 const KEY_LOCAL_STORAGE_TOKEN = "TOKEN";
 
-const login = ({ email, password }) => {
+AuthService.login = ({ email, password }) => {
   return HTTPService.post(`${config.BASE_URL}${ENDPOINT_LOGIN}`, {
     email,
     password,
   });
 };
 
-const tokenVerify = async () => {
-  const token = getToken();
+AuthService.tokenVerify = async () => {
+  const token = AuthService.getToken();
 
   try {
     if (token) {
@@ -22,7 +23,7 @@ const tokenVerify = async () => {
         {},
         {
           headers: {
-            "x-access-token": getToken(),
+            "x-access-token": AuthService.getToken(),
           },
         }
       );
@@ -36,17 +37,12 @@ const tokenVerify = async () => {
   }
 };
 
-const saveToken = (token) => {
+AuthService.saveToken = (token) => {
   localStorage.setItem(KEY_LOCAL_STORAGE_TOKEN, token);
 };
 
-const getToken = () => {
+AuthService.getToken = () => {
   return localStorage.getItem(KEY_LOCAL_STORAGE_TOKEN);
 };
 
-export default {
-  login,
-  saveToken,
-  getToken,
-  tokenVerify,
-};
+export default AuthService;

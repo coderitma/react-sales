@@ -2,6 +2,7 @@ import config from "../config";
 import AuthService from "./AuthService";
 import HTTPService from "./HTTPService";
 
+const PemasokService = {};
 const ENDPOINT = `${config.BASE_URL}/pemasok`;
 const CONFIG = {
   headers: {
@@ -9,20 +10,20 @@ const CONFIG = {
   },
 };
 
-const list = (query) => {
+PemasokService.list = (query) => {
   CONFIG.params = { ...query };
   return HTTPService.get(ENDPOINT, CONFIG);
 };
 
-const create = (pemasok) => {
+PemasokService.create = (pemasok) => {
   return HTTPService.post(ENDPOINT, { ...pemasok }, CONFIG);
 };
 
-const get = (kodePemasok) => {
+PemasokService.get = (kodePemasok) => {
   return HTTPService.get(`${ENDPOINT}/${kodePemasok}`, CONFIG);
 };
 
-const edit = (pemasok) => {
+PemasokService.edit = (pemasok) => {
   const { kodePemasok, ...dataPemasok } = pemasok;
   return HTTPService.put(
     `${ENDPOINT}/${kodePemasok}`,
@@ -31,8 +32,8 @@ const edit = (pemasok) => {
   );
 };
 
-const remove = (kodePemasok) => {
+PemasokService.remove = (kodePemasok) => {
   return HTTPService.delete(`${ENDPOINT}/${kodePemasok}`, CONFIG);
 };
 
-export default { list, create, edit, remove, get };
+export default PemasokService;

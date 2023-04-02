@@ -2,10 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
-import {
-  helperReadableCurrency,
-  helperReadableDate,
-} from "../../utils/helpers";
+import { helperReadableDate } from "../../utils/helpers";
 
 const PembelianPrintPage = () => {
   const navigate = useNavigate();
@@ -24,6 +21,7 @@ const PembelianPrintPage = () => {
 
   useEffect(() => {
     handlePembelianServiceGet();
+    // eslint-disable-next-line
   }, []);
 
   return (

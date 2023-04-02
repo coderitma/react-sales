@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
 import { FaSearchPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";

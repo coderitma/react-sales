@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
-import { FaArrowLeft, FaSave, FaSearch, FaTrash } from "react-icons/fa";
+import { FaArrowLeft, FaSave, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
 import { itemIsDuplicatedInArrayObject } from "../../utils/helpers";
@@ -61,19 +61,6 @@ const PembelianAddPage = () => {
       .catch((error) => {
         alert(error);
       });
-  };
-
-  const callbackBarangMultipleChoiceWidget = (data) => {
-    if (!itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)) {
-      setDaftarItemBeli((values) => {
-        const result = [...values];
-        data.jumlahBeli = 1;
-        result.push(data);
-        return result;
-      });
-    } else {
-      alert("item duplicate");
-    }
   };
 
   const callbackPemasokChoiceWidget = (data) => {

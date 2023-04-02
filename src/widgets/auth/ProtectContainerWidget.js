@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import { FaInfoCircle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import AuthService from "../../services/AuthService";
 import { ToastContext } from "../../utils/context";
 
 const ProtectContainerWidget = ({ children }) => {
-  const navigate = useNavigate();
   const [toastContextVariant, setToastContextVariant] = useState("light");
   const [toastContextShow, setToastContextShow] = useState(false);
   const [toastContextMessage, setToastContextMessage] = useState("");

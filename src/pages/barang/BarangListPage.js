@@ -47,6 +47,7 @@ const BarangListPage = () => {
       setLoaded(true);
     }
     handleBarangServiceList();
+    // eslint-disable-next-line
   }, [queryBarang]);
 
   const callbackBarangSearchInlineWidget = (query) => {
