@@ -11,8 +11,7 @@ import PembelianAddPage from "./pages/pembelian/PembelianAddPage";
 import PembelianListPage from "./pages/pembelian/PembelianListPage";
 import PembelianPrintPage from "./pages/pembelian/PembelianPrintPage";
 import PembelianReportingPage from "./pages/pembelian/PembelianReportingPage";
-import ProtectContainerWidget from "./widgets/auth/ProtectContainerWidget";
-import LayoutWidget from "./widgets/commons/LayoutWidget";
+import BasicWidget from "./widgets/commons/BasicWidget";
 import ReportingListPage from "./pages/reporting/ReportingListPage";
 import ReportingPembelianCreatePage from "./pages/reporting/ReportingPembelianCreatePage";
 
@@ -20,103 +19,31 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LayoutWidget />}>
+        <Route path="/" element={<BasicWidget />}>
           <Route index element={<AuthLoginPage />} />
-          <Route
-            path="/barang"
-            element={
-              <ProtectContainerWidget>
-                <BarangListPage />
-              </ProtectContainerWidget>
-            }
-          />
-          <Route
-            path="/barang/add"
-            element={
-              <ProtectContainerWidget>
-                <BarangAddPage />
-              </ProtectContainerWidget>
-            }
-          />
-          <Route
-            path="/barang/edit/:kodeBarang"
-            element={
-              <ProtectContainerWidget>
-                <BarangEditPage />
-              </ProtectContainerWidget>
-            }
-          />
-          <Route
-            path="/pemasok"
-            element={
-              <ProtectContainerWidget>
-                <PemasokListPage />
-              </ProtectContainerWidget>
-            }
-          />
-          <Route
-            path="/pemasok/add"
-            element={
-              <ProtectContainerWidget>
-                <PemasokAddPage />
-              </ProtectContainerWidget>
-            }
-          />
+          <Route path="/barang" element={<BarangListPage />} />
+          <Route path="/barang/add" element={<BarangAddPage />} />
+          <Route path="/barang/edit/:kodeBarang" element={<BarangEditPage />} />
+          <Route path="/pemasok" element={<PemasokListPage />} />
+          <Route path="/pemasok/add" element={<PemasokAddPage />} />
           <Route
             path="/pemasok/edit/:kodePemasok"
-            element={
-              <ProtectContainerWidget>
-                <PemasokEditPage />
-              </ProtectContainerWidget>
-            }
+            element={<PemasokEditPage />}
           />
-          <Route
-            path="/pembelian"
-            element={
-              <ProtectContainerWidget>
-                <PembelianListPage />
-              </ProtectContainerWidget>
-            }
-          />
-          <Route
-            path="/pembelian/add"
-            element={
-              <ProtectContainerWidget>
-                <PembelianAddPage />
-              </ProtectContainerWidget>
-            }
-          />
+          <Route path="/pembelian" element={<PembelianListPage />} />
+          <Route path="/pembelian/add" element={<PembelianAddPage />} />
           <Route
             path="/pembelian/reporting"
-            element={
-              <ProtectContainerWidget>
-                <PembelianReportingPage />
-              </ProtectContainerWidget>
-            }
+            element={<PembelianReportingPage />}
           />
           <Route
             path="/pembelian/:faktur/print"
-            element={
-              <ProtectContainerWidget>
-                <PembelianPrintPage />
-              </ProtectContainerWidget>
-            }
+            element={<PembelianPrintPage />}
           />
-          <Route
-            path="/reporting"
-            element={
-              <ProtectContainerWidget>
-                <ReportingListPage />
-              </ProtectContainerWidget>
-            }
-          />
+          <Route path="/reporting" element={<ReportingListPage />} />
           <Route
             path="/reporting/pembelian"
-            element={
-              <ProtectContainerWidget>
-                <ReportingPembelianCreatePage />
-              </ProtectContainerWidget>
-            }
+            element={<ReportingPembelianCreatePage />}
           />
         </Route>
       </Routes>

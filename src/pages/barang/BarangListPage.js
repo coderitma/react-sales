@@ -1,62 +1,16 @@
-import { useContext, useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import BarangService from "../../services/BarangService";
-import { ToastContext } from "../../utils/context";
 import { helperReadableCurrency } from "../../utils/helpers";
 import BarangSearchInlineWidget from "../../widgets/barang/BarangSearchInlineWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
+import useDaftarBarang from "../../utils/hooks/barang/useDaftarBarang";
 
 const BarangListPage = () => {
-  const {
-    setToastContextVariant,
-    setToastContextShow,
-    setToastContextMessage,
-  } = useContext(ToastContext);
   const navigate = useNavigate();
-  const [daftarBarang, setDaftarBarang] = useState([]);
-  const [paginateBarang, setPaginateBarang] = useState({});
-  const [queryBarang, setQueryBarang] = useState({ page: 1, limit: 10 });
-  const [loaded, setLoaded] = useState(false);
-
-  const handleBarangServiceList = () => {
-    BarangService.list(queryBarang)
-      .then((response) => {
-        if (response.data.length === 0 && loaded) {
-          setToastContextMessage("Data barang kosong");
-          setToastContextVariant("light");
-          setToastContextShow(true);
-        }
-        setDaftarBarang(response.data);
-        if (response.headers.pagination) {
-          setPaginateBarang(JSON.parse(response.headers.pagination));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setToastContextMessage(`Error: ${error}`);
-        setToastContextVariant("warning");
-        setToastContextShow(true);
-      });
-  };
-
-  useEffect(() => {
-    if (!loaded) {
-      setLoaded(true);
-    }
-    handleBarangServiceList();
-    // eslint-disable-next-line
-  }, [queryBarang]);
-
-  const callbackBarangSearchInlineWidget = (query) => {
-    setQueryBarang((values) => ({ ...values, ...query }));
-  };
-
-  const callbackPaginator = (page) => {
-    setQueryBarang((values) => ({ ...values, page }));
-  };
+  const [daftarBarang, pagination, callbackSearch, callbackPagination] =
+    useDaftarBarang();
 
   return (
     <>
@@ -66,7 +20,7 @@ const BarangListPage = () => {
             attr={{ variant: "secondary" }}
             isShowKodeBarang={true}
             isShowNamaBarang={true}
-            callbackBarangSearchInlineWidget={callbackBarangSearchInlineWidget}
+            callbackBarangSearchInlineWidget={callbackSearch}
           />
         }
         buttonCreate={
@@ -78,8 +32,8 @@ const BarangListPage = () => {
           <Card.Header className="d-flex justify-content-between align-item-baseline">
             <h5>Daftar Barang</h5>
             <Paginator
-              paginate={paginateBarang}
-              callbackPaginator={callbackPaginator}
+              paginate={pagination}
+              callbackPaginator={callbackPagination}
             />
           </Card.Header>
           <Table striped borderless>
