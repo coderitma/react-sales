@@ -1,43 +1,20 @@
-import { useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { FaArrowLeft, FaSave } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import BarangService from "../../services/BarangService";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
+import useAddBarang from "../../utils/hooks/barang/useAddBarang";
 
 const BarangAddPage = () => {
-  const navigate = useNavigate();
-  const [barang, setBarang] = useState({});
-
-  const handleInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setBarang((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleBarangServiceCreate = () => {
-    BarangService.create(barang)
-      .then(() => {
-        alert("Berhasil menambahkan barang");
-        navigate("/barang");
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+  const [barang, handleInput, create, back] = useAddBarang();
 
   return (
     <>
       <NavigationWidget
         actionTop={
           <>
-            <Button
-              className="me-2"
-              onClick={() => navigate(-1)}
-              variant="secondary">
+            <Button className="me-2" onClick={() => back()} variant="secondary">
               <FaArrowLeft /> Kembali
             </Button>
-            <Button onClick={handleBarangServiceCreate}>
+            <Button onClick={create}>
               <FaSave /> Simpan
             </Button>
           </>
