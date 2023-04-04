@@ -20,7 +20,7 @@ const useDaftarBarang = (query) => {
   useEffect(() => {
     init();
     // eslint-disable-next-line
-  }, [queryBuilder]);
+  }, []);
 
   const callbackSearch = (q) => {
     setQueryBuilder((values) => ({ ...values, ...q }));
