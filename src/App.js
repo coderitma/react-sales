@@ -9,11 +9,8 @@ import PemasokEditPage from "./pages/pemasok/PemasokEditPage";
 import PemasokListPage from "./pages/pemasok/PemasokListPage";
 import PembelianAddPage from "./pages/pembelian/PembelianAddPage";
 import PembelianListPage from "./pages/pembelian/PembelianListPage";
-import PembelianPrintPage from "./pages/pembelian/PembelianPrintPage";
-import PembelianReportingPage from "./pages/pembelian/PembelianReportingPage";
 import BasicWidget from "./widgets/commons/BasicWidget";
-import ReportingListPage from "./pages/reporting/ReportingListPage";
-import ReportingPembelianCreatePage from "./pages/reporting/ReportingPembelianCreatePage";
+import ReportingPembelianPage from "./pages/reporting/ReportingPembelianPage";
 
 function App() {
   return (
@@ -33,17 +30,8 @@ function App() {
           <Route path="/pembelian" element={<PembelianListPage />} />
           <Route path="/pembelian/add" element={<PembelianAddPage />} />
           <Route
-            path="/pembelian/reporting"
-            element={<PembelianReportingPage />}
-          />
-          <Route
-            path="/pembelian/:faktur/print"
-            element={<PembelianPrintPage />}
-          />
-          <Route path="/reporting" element={<ReportingListPage />} />
-          <Route
             path="/reporting/pembelian"
-            element={<ReportingPembelianCreatePage />}
+            element={<ReportingPembelianPage />}
           />
         </Route>
       </Routes>

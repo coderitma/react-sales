@@ -50,11 +50,9 @@ const PembelianAddPage = () => {
   const handlePembelianServiceCreate = () => {
     PembelianService.create(pembelian)
       .then((response) => {
-        const printFaktur = window.confirm(
-          "Berhasil menambahkan transaksi, cetak faktur?"
-        );
+        const printFaktur = window.confirm("Cetak faktur?");
         if (printFaktur) {
-          window.open(`/pembelian/${pembelian.faktur}/print`);
+          PembelianService.fakturPrint(response.data.faktur);
         }
         navigate("/pembelian");
       })

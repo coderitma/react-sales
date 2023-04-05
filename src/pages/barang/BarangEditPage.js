@@ -1,52 +1,16 @@
-import { useEffect, useState } from "react";
 import { Card, Col, Container, Row, Form, Button } from "react-bootstrap";
 import { FaArrowLeft, FaSave, FaTrash } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
-import BarangService from "../../services/BarangService";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
+import useEditBarang from "../../utils/hooks/barang/useEditBarang";
 
 const BarangEditPage = () => {
-  const navigate = useNavigate();
-  const { kodeBarang } = useParams();
-  const [barang, setBarang] = useState({});
-
-  const handleInput = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setBarang((values) => ({ ...values, [name]: value }));
-  };
-
-  const handleBarangServiceEdit = () => {
-    BarangService.edit(barang)
-      .then((response) => {
-        alert("Berhasil mengedit barang");
-        navigate("/barang");
-      })
-      .catch((error) => alert(error));
-  };
-
-  const handleBarangServiceRemove = () => {
-    let confirmRemove = window.confirm(`Yakin ingin menghapus ${kodeBarang}?`);
-    if (confirmRemove) {
-      BarangService.remove(kodeBarang)
-        .then((response) => {
-          alert("Berhasil menghapus barang");
-          navigate("/barang");
-        })
-        .catch((error) => alert(error));
-    }
-  };
-
-  useEffect(() => {
-    BarangService.get(kodeBarang)
-      .then((response) => {
-        setBarang(response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-    // eslint-disable-next-line
-  }, []);
+  const [
+    barang,
+    handleInput,
+    handleBarangServiceEdit,
+    handleBarangServiceRemove,
+    navigate,
+  ] = useEditBarang();
 
   return (
     <>

@@ -31,8 +31,23 @@ const helperReadableCurrency = (num) => {
   return n;
 };
 
+const helperHandlerExportResponse = (response, resolve, filename) => {
+  const href = URL.createObjectURL(response.data);
+  const link = document.createElement("a");
+  link.href = href;
+  link.setAttribute("download", `${filename}-${new Date().getTime()}.xlsx`);
+  document.body.appendChild(link);
+  link.click();
+
+  // clean up "a" element & remove ObjectURL
+  document.body.removeChild(link);
+  URL.revokeObjectURL(href);
+  resolve(true);
+};
+
 export {
   itemIsDuplicatedInArrayObject,
   helperReadableDate,
   helperReadableCurrency,
+  helperHandlerExportResponse,
 };
