@@ -1,43 +1,25 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Card, Table } from "react-bootstrap";
 import { FaEdit, FaPlusCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PemasokService from "../../services/PemasokService";
-import { ToastContext } from "../../utils/context";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import Paginator from "../../widgets/commons/Paginator";
 import PemasokSearchInlineWidget from "../../widgets/pemasok/PemasokSearchInlineWidget";
 
 const PemasokListPage = () => {
-  const {
-    setToastContextVariant,
-    setToastContextShow,
-    setToastContextMessage,
-  } = useContext(ToastContext);
-  const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
   const [daftarPemasok, setDaftarPemasok] = useState([]);
   const [paginatePemasok, setPaginatePemasok] = useState({});
   const [queryPemasok, setQueryPemasok] = useState({ page: 1, limit: 10 });
 
   const handlePemasokServiceList = () => {
-    PemasokService.list(queryPemasok)
-      .then((response) => {
-        if (response.data.length === 0 && loaded) {
-          setToastContextMessage("Data pemasok kosong");
-          setToastContextVariant("light");
-          setToastContextShow(true);
-        }
-        setDaftarPemasok(response.data);
-        if (response.headers.pagination) {
-          setPaginatePemasok(JSON.parse(response.headers.pagination));
-        }
-      })
-      .catch((error) => {
-        setToastContextMessage(`Error: ${error}`);
-        setToastContextVariant("warning");
-        setToastContextShow(true);
-      });
+    PemasokService.list(queryPemasok).then((response) => {
+      setDaftarPemasok(response.data);
+      if (response.headers.pagination) {
+        setPaginatePemasok(JSON.parse(response.headers.pagination));
+      }
+    });
   };
 
   const callbackPaginator = (page) => {
@@ -45,9 +27,6 @@ const PemasokListPage = () => {
   };
 
   useEffect(() => {
-    if (!loaded) {
-      setLoaded(true);
-    }
     handlePemasokServiceList();
     // eslint-disable-next-line
   }, [queryPemasok]);

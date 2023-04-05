@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ReportingService from "../../services/ReportingService";
-import { FaArrowLeft, FaSave } from "react-icons/fa";
+import { FaArrowLeft, FaDownload } from "react-icons/fa";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import { Button, Card, Form } from "react-bootstrap";
+import PembelianService from "../../services/PembelianService";
 
-const ReportingPembelianCreatePage = () => {
+const ReportingPembelianPage = () => {
   const navigate = useNavigate();
   const [reportingPembelian, setReportingPembelian] = useState({
     kodeBarang: "",
@@ -19,28 +19,16 @@ const ReportingPembelianCreatePage = () => {
     setReportingPembelian((values) => ({ ...values, [name]: value }));
   };
 
-  const handleReportingServiceCreate = () => {
-    ReportingService.create(reportingPembelian).then(async (response) => {
-      let isDownload = window.confirm("Berhasil, ingin diunduh?");
-      if (isDownload) {
-        await ReportingService.download(response.data);
-      }
-      navigate("/reporting");
-    });
+  const handleReportPeriodExcel = async () => {
+    await PembelianService.reportPeriodExcel(reportingPembelian);
   };
 
   return (
     <NavigationWidget
       actionTop={
         <>
-          <Button
-            className="me-2"
-            onClick={() => navigate(-1)}
-            variant="secondary">
-            <FaArrowLeft /> Kembali
-          </Button>
-          <Button onClick={handleReportingServiceCreate}>
-            <FaSave /> Simpan
+          <Button onClick={handleReportPeriodExcel}>
+            <FaDownload /> Export
           </Button>
         </>
       }>
@@ -49,7 +37,7 @@ const ReportingPembelianCreatePage = () => {
           <h5>Laporan Pembelian Barang</h5>
         </Card.Header>
         <Card.Body>
-          <Form.Group className="mt-2">
+          <Form.Group>
             <Form.Label>Kode Barang</Form.Label>
             <Form.Control
               name="kodeBarang"
@@ -57,7 +45,7 @@ const ReportingPembelianCreatePage = () => {
               onChange={handleInput}
             />
           </Form.Group>
-          <Form.Group className="mt-2">
+          <Form.Group className="mt-3">
             <Form.Label>Dari Tanggal</Form.Label>
             <Form.Control
               name="fromTanggal"
@@ -66,7 +54,7 @@ const ReportingPembelianCreatePage = () => {
               onChange={handleInput}
             />
           </Form.Group>
-          <Form.Group className="mt-2">
+          <Form.Group className="mt-3">
             <Form.Label>Sampai Tanggal</Form.Label>
             <Form.Control
               name="toTanggal"
@@ -81,4 +69,4 @@ const ReportingPembelianCreatePage = () => {
   );
 };
 
-export default ReportingPembelianCreatePage;
+export default ReportingPembelianPage;

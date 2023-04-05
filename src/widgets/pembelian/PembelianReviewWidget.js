@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
-import { FaSearchPlus } from "react-icons/fa";
+import { FaFileExport, FaPrint, FaSearchPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
 
@@ -9,14 +9,14 @@ const PembelianReviewWidget = ({ attr, faktur }) => {
   const [show, setShow] = useState(false);
 
   const handlePembelianServiceGet = () => {
-    PembelianService.get(faktur)
-      .then((response) => {
-        setShow(true);
-        setPembelian(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    PembelianService.get(faktur).then((response) => {
+      setShow(true);
+      setPembelian(response.data);
+    });
+  };
+
+  const handleFakturPrint = async () => {
+    await PembelianService.fakturPrint(pembelian.faktur);
   };
 
   return (
@@ -83,12 +83,9 @@ const PembelianReviewWidget = ({ attr, faktur }) => {
             </Table>
           )}
           <Modal.Footer>
-            <Link
-              className="btn btn-primary"
-              target="_blank"
-              to={`/pembelian/${pembelian.faktur}/print`}>
-              Print
-            </Link>
+            <Button onClick={handleFakturPrint}>
+              <FaPrint /> Print
+            </Button>
           </Modal.Footer>
         </Modal>
       )}

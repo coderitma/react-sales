@@ -4,7 +4,7 @@ import Navbar from "react-bootstrap/Navbar";
 import { useNavigate } from "react-router-dom";
 import { BiBarChartSquare } from "react-icons/bi";
 import { Col, Row } from "react-bootstrap";
-import { FaChartArea, FaChartBar, FaTable } from "react-icons/fa";
+import { FaCartArrowDown, FaChartBar, FaTable } from "react-icons/fa";
 
 const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
               </Nav.Link>
               <Nav.Link onClick={() => navigate("/pemasok")}>Pemasok</Nav.Link>
               <Nav.Link eventKey="disabled" disabled>
-                <FaChartArea />
+                <FaCartArrowDown />
                 &nbsp;&nbsp;&nbsp;Transaksi
               </Nav.Link>
               <Nav.Link onClick={() => navigate("/pembelian")}>
@@ -49,8 +49,8 @@ const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
                 <FaChartBar />
                 &nbsp;&nbsp;&nbsp;Laporan
               </Nav.Link>
-              <Nav.Link onClick={() => navigate("/reporting")}>
-                Laporan
+              <Nav.Link onClick={() => navigate("/reporting/pembelian")}>
+                Laporan Pembelian
               </Nav.Link>
             </Nav>
           </Col>
