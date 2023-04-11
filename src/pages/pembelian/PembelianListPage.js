@@ -78,13 +78,6 @@ const PembelianListPage = () => {
                 <th>Aksi</th>
               </tr>
             </thead>
-            {daftarPembelian.length <= 0 && (
-              <tbody>
-                <tr>
-                  <td colSpan={5}>Data pembelian kosong</td>
-                </tr>
-              </tbody>
-            )}
 
             {daftarPembelian.length > 0 && (
               <tbody>

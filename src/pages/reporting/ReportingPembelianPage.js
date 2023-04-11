@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { FaArrowLeft, FaDownload } from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import { Button, Card, Form } from "react-bootstrap";
 import PembelianService from "../../services/PembelianService";
 
 const ReportingPembelianPage = () => {
-  const navigate = useNavigate();
   const [reportingPembelian, setReportingPembelian] = useState({
     kodeBarang: "",
     fromTanggal: new Date(),
