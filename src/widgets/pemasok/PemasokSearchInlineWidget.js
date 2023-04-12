@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { FaSearch } from "react-icons/fa";
 
@@ -10,6 +10,7 @@ const PemasokSearchInlineWidget = ({
   isShowTeleponPemasok,
   callbackPemasokSearchInlineWidget,
   children,
+  q,
 }) => {
   const [query, setQuery] = useState({
     kodePemasok: "",
@@ -17,6 +18,13 @@ const PemasokSearchInlineWidget = ({
     alamatPemasok: "",
     teleponPemasok: "",
   });
+
+  useEffect(() => {
+    if (q) {
+      setQuery((values) => ({ ...values, ...q }));
+    }
+    // eslint-disable-next-line
+  }, [q]);
 
   const handleInput = (e) => {
     const name = e.target.name;

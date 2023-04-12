@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { FaArrowLeft, FaSave, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import PembelianService from "../../services/PembelianService";
-import { itemIsDuplicatedInArrayObject } from "../../utils/helpers";
+import {
+  helperReadableCurrency,
+  itemIsDuplicatedInArrayObject,
+} from "../../utils/helpers";
 import BarangChoiceWidget from "../../widgets/barang/BarangChoiceWidget";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import PemasokChoiceWidget from "../../widgets/pemasok/PemasokChoiceWidget";
-import PembelianInvoiceReviewWidget from "../../widgets/pembelian/PembelianInvoiceReviewWidget";
 
 const PembelianAddPage = () => {
   const navigate = useNavigate();
@@ -15,16 +17,20 @@ const PembelianAddPage = () => {
     faktur: "",
     tanggal: "",
     total: 0,
-    pemasok: {},
-    item: [],
+    kembali: 0,
+    dibayar: 0,
   });
+
   const [daftarItemBeli, setDaftarItemBeli] = useState([]);
   const [pemasok, setPemasok] = useState({});
 
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setPembelian((values) => ({ ...values, [name]: value }));
+    setPembelian((values) => ({
+      ...values,
+      [name]: name === "dibayar" ? parseInt(value) : value,
+    }));
   };
 
   const handleInputDaftarItemBeli = (e, index) => {
@@ -48,7 +54,12 @@ const PembelianAddPage = () => {
   };
 
   const handlePembelianServiceCreate = () => {
-    PembelianService.create(pembelian)
+    let payload = {
+      ...pembelian,
+      pemasok,
+      item: daftarItemBeli,
+    };
+    PembelianService.create(payload)
       .then((response) => {
         const printFaktur = window.confirm("Cetak faktur?");
         if (printFaktur) {
@@ -61,36 +72,180 @@ const PembelianAddPage = () => {
       });
   };
 
-  const callbackPemasokChoiceWidget = (data) => {
-    setPemasok(data);
+  const callbackPemasokChoiceWidget = useCallback(
+    (data) => {
+      setPemasok(data);
+    },
+    [pemasok]
+  );
+
+  const callbackBarangChoiceWidget = useCallback(
+    (data) => {
+      data.subtotal = 0;
+      data.jumlahBeli = 1;
+      if (!itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)) {
+        setDaftarItemBeli((values) => {
+          const result = [...values];
+          data.subtotal = data.jumlahBeli * data.hargaBeli;
+          result.push(data);
+          return result;
+        });
+      } else {
+        alert("Item duplikat");
+      }
+    },
+    [daftarItemBeli]
+  );
+
+  const componentInlinePembelian = () => {
+    return (
+      <Card>
+        <Card.Header>Pembelian</Card.Header>
+        <Card.Body>
+          <Form.Group className="mt-2">
+            <Form.Label>Faktur</Form.Label>
+            <Form.Control
+              name="faktur"
+              type="text"
+              isInvalid={!pembelian.faktur}
+              value={pembelian.faktur}
+              onChange={handleInput}
+            />
+          </Form.Group>
+          <Form.Group className="mt-2">
+            <Form.Label>Tanggal</Form.Label>
+            <Form.Control
+              name="tanggal"
+              type="date"
+              isInvalid={!pembelian.tanggal}
+              isValid={pembelian.tanggal}
+              value={pembelian.tanggal}
+              onChange={handleInput}
+            />
+          </Form.Group>
+        </Card.Body>
+      </Card>
+    );
   };
 
-  const callbackBarangChoiceWidget = (data) => {
-    if (!itemIsDuplicatedInArrayObject(data, "kodeBarang", daftarItemBeli)) {
-      setDaftarItemBeli((values) => {
-        const result = [...values];
-        data.jumlahBeli = 1;
-        result.push(data);
-        return result;
-      });
-    } else {
-      alert("item duplicate");
-    }
+  const componentInlinePemasok = () => {
+    return (
+      <Card className="mt-4">
+        <Card.Header>Pemasok</Card.Header>
+        <Card.Body>
+          <PemasokChoiceWidget
+            onlyButton={false}
+            callbackPemasokChoiceWidget={callbackPemasokChoiceWidget}
+          />
+        </Card.Body>
+      </Card>
+    );
   };
 
-  useEffect(() => {
+  const componentInlineItems = () => {
+    return (
+      <Card className="mt-4">
+        <Card.Header className="d-flex justify-content-between align-items-baseline">
+          Daftar Item{" "}
+          <BarangChoiceWidget
+            callbackBarangChoiceWidget={callbackBarangChoiceWidget}
+          />
+        </Card.Header>
+        <Table>
+          <thead>
+            <tr>
+              <th>Kode Barang</th>
+              <th>Nama Barang</th>
+              <th>Harga Beli</th>
+              <th>Stok </th>
+              <th>Qty</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {daftarItemBeli.map((itemBeli, index) => (
+              <tr key={index}>
+                <td>{itemBeli.kodeBarang}</td>
+                <td>{itemBeli.namaBarang}</td>
+                <td>{itemBeli.hargaBeli}</td>
+                <td>{itemBeli.jumlahBarang}</td>
+                <td>
+                  <Form.Control
+                    type="number"
+                    name="jumlahBeli"
+                    isInvalid={
+                      itemBeli.jumlahBeli >= itemBeli.jumlahBarang ||
+                      !itemBeli.jumlahBeli
+                    }
+                    value={itemBeli.jumlahBeli}
+                    onChange={(e) => handleInputDaftarItemBeli(e, index)}
+                  />
+                </td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    onClick={(e) => handleRemoveItem(itemBeli)}>
+                    <FaTrash />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Card>
+    );
+  };
+
+  const componentInlinePayment = () => {
+    return (
+      <Card>
+        <Card.Header>Pembayaran</Card.Header>
+        <Table>
+          <tbody>
+            <tr>
+              <th>Total Pembayaran</th>
+              <td>{helperReadableCurrency(pembelian.total)}</td>
+            </tr>
+            <tr>
+              <th>Uang Kembalian</th>
+              <td>{helperReadableCurrency(pembelian.kembali || 0)}</td>
+            </tr>
+            <tr>
+              <th>Dibayar</th>
+              <td>
+                <Form.Control
+                  type="number"
+                  name="dibayar"
+                  max={100}
+                  value={pembelian.dibayar || 0}
+                  onChange={handleInput}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
+      </Card>
+    );
+  };
+
+  const computedTotal = useMemo(() => {
     let sum = 0;
     if (daftarItemBeli.length > 0) {
       for (let itemBeli of daftarItemBeli) {
         sum += itemBeli.hargaBeli * parseInt(itemBeli.jumlahBeli);
       }
     }
-    setPembelian((values) => ({ ...values, item: daftarItemBeli, total: sum }));
+    setPembelian((values) => ({ ...values, total: sum }));
+    return null;
   }, [daftarItemBeli]);
 
-  useEffect(() => {
-    setPembelian((values) => ({ ...values, pemasok }));
-  }, [pemasok]);
+  const computedKembalian = useMemo(() => {
+    setPembelian((values) => ({
+      ...values,
+      kembali: values.dibayar - values.total,
+    }));
+    return null;
+  }, [pembelian.dibayar]);
 
   return (
     <>
@@ -109,94 +264,11 @@ const PembelianAddPage = () => {
         }>
         <Row>
           <Col md={7}>
-            <Card>
-              <Card.Header>Pembelian</Card.Header>
-              <Card.Body>
-                <Form.Group className="mt-2">
-                  <Form.Label>Faktur</Form.Label>
-                  <Form.Control
-                    name="faktur"
-                    type="text"
-                    isInvalid={!pembelian.faktur}
-                    value={pembelian.faktur}
-                    onChange={handleInput}
-                  />
-                </Form.Group>
-                <Form.Group className="mt-2">
-                  <Form.Label>Tanggal</Form.Label>
-                  <Form.Control
-                    name="tanggal"
-                    type="date"
-                    isInvalid={!pembelian.tanggal}
-                    isValid={pembelian.tanggal}
-                    value={pembelian.tanggal}
-                    onChange={handleInput}
-                  />
-                </Form.Group>
-              </Card.Body>
-            </Card>
-            <Card className="mt-4">
-              <Card.Header>Pemasok</Card.Header>
-              <Card.Body>
-                <PemasokChoiceWidget
-                  callbackPemasokChoiceWidget={callbackPemasokChoiceWidget}
-                />
-              </Card.Body>
-            </Card>
-            <Card className="mt-4">
-              <Card.Header className="d-flex justify-content-between align-items-baseline">
-                Daftar Item{" "}
-                <BarangChoiceWidget
-                  attr={{ className: "w-50" }}
-                  callbackBarangChoiceWidget={callbackBarangChoiceWidget}
-                />
-              </Card.Header>
-              <Table>
-                <thead>
-                  <tr>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Harga Beli</th>
-                    <th>Harga Jual</th>
-                    <th>Jumlah</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {daftarItemBeli.map((itemBeli, index) => (
-                    <tr key={index}>
-                      <td>{itemBeli.kodeBarang}</td>
-                      <td>{itemBeli.namaBarang}</td>
-                      <td>{itemBeli.hargaBeli}</td>
-                      <td>{itemBeli.hargaJual}</td>
-                      <td>
-                        <Form.Control
-                          type="number"
-                          name="jumlahBeli"
-                          isInvalid={
-                            itemBeli.jumlahBeli >= itemBeli.jumlahBarang ||
-                            !itemBeli.jumlahBeli
-                          }
-                          value={itemBeli.jumlahBeli}
-                          onChange={(e) => handleInputDaftarItemBeli(e, index)}
-                        />
-                      </td>
-                      <td>
-                        <Button
-                          variant="outline-danger"
-                          onClick={(e) => handleRemoveItem(itemBeli)}>
-                          <FaTrash />
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </Card>
+            {componentInlinePembelian()}
+            {componentInlinePemasok()}
+            {componentInlineItems()}
           </Col>
-          <Col md={5}>
-            <PembelianInvoiceReviewWidget pembelian={pembelian} />
-          </Col>
+          <Col md={5}>{componentInlinePayment()}</Col>
         </Row>
         <Row>
           <Col md={12} className="mt-4"></Col>

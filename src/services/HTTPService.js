@@ -21,6 +21,11 @@ HTTPService.interceptors.response.use(
   },
   (error) => {
     document.body.classList.remove("loading-indicator");
+
+    if (error.response.status === 403) {
+      window.location.href = "/";
+    }
+
     if (error.response.status === 401) {
       window.location.href = "/";
     }

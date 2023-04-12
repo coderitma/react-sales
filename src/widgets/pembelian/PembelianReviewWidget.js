@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button, Modal, Table } from "react-bootstrap";
-import { FaFileExport, FaPrint, FaSearchPlus } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { FaPrint, FaSearchPlus } from "react-icons/fa";
 import PembelianService from "../../services/PembelianService";
 
 const PembelianReviewWidget = ({ attr, faktur }) => {
@@ -60,8 +59,9 @@ const PembelianReviewWidget = ({ attr, faktur }) => {
                 <tr>
                   <th>Kode Barang</th>
                   <th>Nama Barang</th>
-                  <th>Harga</th>
+                  <th>Harga Beli</th>
                   <th>Qty</th>
+                  <th>Subtotal</th>
                 </tr>
               </thead>
               <tbody>
@@ -71,6 +71,7 @@ const PembelianReviewWidget = ({ attr, faktur }) => {
                     <td>{item.namaBarang}</td>
                     <td>{item.hargaBeli}</td>
                     <td>{item.jumlahBeli}</td>
+                    <td>{item.subtotal}</td>
                   </tr>
                 ))}
                 <tr>

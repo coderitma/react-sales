@@ -3,6 +3,7 @@ const itemIsDuplicatedInArrayObject = (item, by, array) => {
   for (let obj of array) {
     if (item[by] === obj[by]) {
       isDuplicate = true;
+      console.log(item[by]);
     }
   }
 

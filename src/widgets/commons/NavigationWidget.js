@@ -8,7 +8,6 @@ import { FaCartArrowDown, FaChartBar, FaTable } from "react-icons/fa";
 
 const NavigationWidget = ({ children, buttonCreate, actionTop }) => {
   const navigate = useNavigate();
-
   return (
     <>
       <Navbar>

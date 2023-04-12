@@ -11,6 +11,7 @@ import PembelianAddPage from "./pages/pembelian/PembelianAddPage";
 import PembelianListPage from "./pages/pembelian/PembelianListPage";
 import BasicWidget from "./widgets/commons/BasicWidget";
 import ReportingPembelianPage from "./pages/reporting/ReportingPembelianPage";
+import AuthRegisterPage from "./pages/auth/AuthRegisterPage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<BasicWidget />}>
           <Route index element={<AuthLoginPage />} />
+          <Route path="/test" element={<AuthRegisterPage />} />
           <Route path="/barang" element={<BarangListPage />} />
           <Route path="/barang/add" element={<BarangAddPage />} />
           <Route path="/barang/edit/:kodeBarang" element={<BarangEditPage />} />

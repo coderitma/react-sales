@@ -45,8 +45,9 @@ const PembelianInvoiceReviewWidget = ({ pembelian, modal, attr }) => {
                 <tr>
                   <th>Kode Barang</th>
                   <th>Nama Barang</th>
-                  <th>Harga</th>
+                  <th>Harga Beli</th>
                   <th>Qty</th>
+                  <th>Subtotal</th>
                 </tr>
               </thead>
               <tbody>
@@ -56,6 +57,7 @@ const PembelianInvoiceReviewWidget = ({ pembelian, modal, attr }) => {
                     <td>{item.namaBarang}</td>
                     <td>{item.hargaBeli}</td>
                     <td>{item.jumlahBeli}</td>
+                    <td>{item.subtotal}</td>
                   </tr>
                 ))}
                 <tr>
