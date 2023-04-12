@@ -12,6 +12,8 @@ import PembelianListPage from "./pages/pembelian/PembelianListPage";
 import BasicWidget from "./widgets/commons/BasicWidget";
 import ReportingPembelianPage from "./pages/reporting/ReportingPembelianPage";
 import AuthRegisterPage from "./pages/auth/AuthRegisterPage";
+import AuthRouter from "./plugins/auth/AuthRouter";
+import AuthPageLogin from "./plugins/auth/pages/AuthPageLogin";
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
       <Routes>
         <Route path="/" element={<BasicWidget />}>
           <Route index element={<AuthLoginPage />} />
+          <Route
+            path={AuthRouter.AUTH_PAGE_LOGIN.path}
+            element={<AuthPageLogin />}
+          />
           <Route path="/test" element={<AuthRegisterPage />} />
           <Route path="/barang" element={<BarangListPage />} />
           <Route path="/barang/add" element={<BarangAddPage />} />

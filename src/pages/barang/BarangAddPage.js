@@ -2,6 +2,7 @@ import { Button, Card, Form } from "react-bootstrap";
 import { FaArrowLeft, FaSave } from "react-icons/fa";
 import NavigationWidget from "../../widgets/commons/NavigationWidget";
 import useAddBarang from "../../utils/hooks/barang/useAddBarang";
+import { useMemo } from "react";
 
 const BarangAddPage = () => {
   const [barang, handleInput, create, back] = useAddBarang();

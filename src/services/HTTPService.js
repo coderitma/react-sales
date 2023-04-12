@@ -31,8 +31,9 @@ HTTPService.interceptors.response.use(
     }
 
     if (error.response.status === 400 || error.response.status === 404) {
+      alert("ETTTT");
       if (error.response.data.message) {
-        alert(error.response.data.message);
+        alert(error.response.data.message, "yuhuuuuuu");
       } else if (error.response.data instanceof Blob) {
         alert(error.message);
       } else {

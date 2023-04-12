@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Button, Card, Col, Form, Row, Table } from "react-bootstrap";
 import { FaArrowLeft, FaSave, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
@@ -96,6 +96,25 @@ const PembelianAddPage = () => {
     },
     [daftarItemBeli]
   );
+
+  const computedTotal = useMemo(() => {
+    let sum = 0;
+    if (daftarItemBeli.length > 0) {
+      for (let itemBeli of daftarItemBeli) {
+        sum += itemBeli.hargaBeli * parseInt(itemBeli.jumlahBeli);
+      }
+    }
+    setPembelian((values) => ({ ...values, total: sum }));
+    return null;
+  }, [daftarItemBeli]);
+
+  const computedKembalian = useMemo(() => {
+    setPembelian((values) => ({
+      ...values,
+      kembali: values.dibayar - values.total,
+    }));
+    return null;
+  }, [pembelian.dibayar]);
 
   const componentInlinePembelian = () => {
     return (
@@ -227,25 +246,6 @@ const PembelianAddPage = () => {
       </Card>
     );
   };
-
-  const computedTotal = useMemo(() => {
-    let sum = 0;
-    if (daftarItemBeli.length > 0) {
-      for (let itemBeli of daftarItemBeli) {
-        sum += itemBeli.hargaBeli * parseInt(itemBeli.jumlahBeli);
-      }
-    }
-    setPembelian((values) => ({ ...values, total: sum }));
-    return null;
-  }, [daftarItemBeli]);
-
-  const computedKembalian = useMemo(() => {
-    setPembelian((values) => ({
-      ...values,
-      kembali: values.dibayar - values.total,
-    }));
-    return null;
-  }, [pembelian.dibayar]);
 
   return (
     <>
