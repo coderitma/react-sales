@@ -17,3 +17,4 @@ const CoreServiceExportBlob = (response, resolver, filename) => {
 };
 
 export default CoreServiceExportBlob;
+// eas build --profile production --platform android
